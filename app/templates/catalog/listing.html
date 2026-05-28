@@ -1,0 +1,165 @@
+{% extends "base.html" %}
+{% block title %}{{ title }} · {{ SHOP_NAME }}{% endblock %}
+
+{% set is_accessory = category and category.kind == 'accessory' %}
+{% set form_action = url_for('catalog.category', slug=category.slug) if category else url_for('catalog.search') %}
+
+{% block content %}
+<div class="container">
+  <div class="breadcrumb">
+    <a href="{{ url_for('main.home') }}">Home</a> / <span>{{ title }}</span>
+  </div>
+
+  <!-- Active filter chips -->
+  {% set active = [] %}
+  {% for key in ['gender','shape','size','material','color','brand'] %}
+    {% if request.args.get(key) %}{% set _ = active.append((key, request.args.get(key))) %}{% endif %}
+  {% endfor %}
+  {% if request.args.get('min') or request.args.get('max') %}
+    {% set _ = active.append(('price', '₹' ~ (request.args.get('min') or '0') ~ ' - ₹' ~ (request.args.get('max') or '∞'))) %}
+  {% endif %}
+
+  <div class="listing-layout">
+    <!-- SIDEBAR -->
+    <aside class="filter-rail" id="filterRail">
+      <div class="filter-rail-head">
+        <strong>Filters</strong>
+        <a href="{{ form_action }}{% if is_search and search_term %}?q={{ search_term }}{% endif %}" class="clear-link">Clear All</a>
+      </div>
+
+      <form method="get" action="{{ form_action }}" id="filterForm">
+        {% if is_search and search_term %}<input type="hidden" name="q" value="{{ search_term }}">{% endif %}
+        <input type="hidden" name="sort" value="{{ request.args.get('sort','recommended') }}">
+
+        <!-- Price -->
+        <div class="filter-group">
+          <button type="button" class="filter-title" onclick="toggleGroup(this)">Price <span>▾</span></button>
+          <div class="filter-body">
+            {% for label, lo, hi in price_ranges %}
+            <label class="opt">
+              <input type="radio" name="price_preset" value="{{ lo }}-{{ hi }}"
+                {% if request.args.get('min') == lo|string and request.args.get('max') == hi|string %}checked{% endif %}
+                onchange="applyPreset(this)">
+              {{ label }}
+            </label>
+            {% endfor %}
+            <input type="hidden" name="min" value="{{ request.args.get('min','') }}">
+            <input type="hidden" name="max" value="{{ request.args.get('max','') }}">
+          </div>
+        </div>
+
+        <!-- Gender -->
+        <div class="filter-group">
+          <button type="button" class="filter-title" onclick="toggleGroup(this)">Gender <span>▾</span></button>
+          <div class="filter-body">
+            {% for g in genders %}
+            <label class="opt"><input type="radio" name="gender" value="{{ g }}" {% if request.args.get('gender')==g %}checked{% endif %}> {{ g }}</label>
+            {% endfor %}
+          </div>
+        </div>
+
+        {% if not is_accessory %}
+        <!-- Shape & Style -->
+        <div class="filter-group">
+          <button type="button" class="filter-title" onclick="toggleGroup(this)">Shape &amp; Style <span>▾</span></button>
+          <div class="filter-body">
+            {% for s in shapes %}
+            <label class="opt"><input type="radio" name="shape" value="{{ s }}" {% if request.args.get('shape')==s %}checked{% endif %}> {{ s }}</label>
+            {% endfor %}
+          </div>
+        </div>
+
+        <!-- Frame Size -->
+        <div class="filter-group">
+          <button type="button" class="filter-title" onclick="toggleGroup(this)">Frame Size <span>▾</span></button>
+          <div class="filter-body">
+            {% for sz in sizes %}
+            <label class="opt"><input type="radio" name="size" value="{{ sz }}" {% if request.args.get('size')==sz %}checked{% endif %}> {{ sz }}</label>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+
+        <!-- Brand -->
+        <div class="filter-group">
+          <button type="button" class="filter-title" onclick="toggleGroup(this)">Brand <span>▾</span></button>
+          <div class="filter-body">
+            {% for b in brands %}
+            <label class="opt"><input type="radio" name="brand" value="{{ b.slug }}" {% if request.args.get('brand')==b.slug %}checked{% endif %}> {{ b.name }}</label>
+            {% endfor %}
+          </div>
+        </div>
+
+        <!-- Material -->
+        {% if materials %}
+        <div class="filter-group">
+          <button type="button" class="filter-title" onclick="toggleGroup(this)">Material <span>▾</span></button>
+          <div class="filter-body">
+            {% for m in materials %}
+            <label class="opt"><input type="radio" name="material" value="{{ m }}" {% if request.args.get('material')==m %}checked{% endif %}> {{ m }}</label>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+
+        <button type="submit" class="btn-primary full apply-btn">Apply Filters</button>
+      </form>
+    </aside>
+
+    <!-- RESULTS -->
+    <section class="listing-main">
+      <div class="listing-toolbar">
+        <div>
+          <h1 class="listing-title">{{ title }}</h1>
+          <span class="result-count">{{ products|length }} item{{ '' if products|length == 1 else 's' }}</span>
+        </div>
+        <div class="toolbar-right">
+          <button class="mobile-filter-btn" onclick="document.getElementById('filterRail').classList.toggle('open')">⚙ Filters</button>
+          <label class="sort-label">Sort by
+            <select id="sortSelect" onchange="changeSort(this.value)">
+              <option value="recommended" {% if request.args.get('sort','recommended')=='recommended' %}selected{% endif %}>Recommended</option>
+              <option value="price_low" {% if request.args.get('sort')=='price_low' %}selected{% endif %}>Price: Low to High</option>
+              <option value="price_high" {% if request.args.get('sort')=='price_high' %}selected{% endif %}>Price: High to Low</option>
+              <option value="newest" {% if request.args.get('sort')=='newest' %}selected{% endif %}>Newest</option>
+            </select>
+          </label>
+        </div>
+      </div>
+
+      {% if active %}
+      <div class="active-chips">
+        {% for key, val in active %}
+        <span class="chip">{{ val }} <a href="{{ form_action }}?{% for k,v in request.args.items() %}{% if k != key and not (key=='price' and k in ['min','max']) %}{{ k }}={{ v }}&{% endif %}{% endfor %}">✕</a></span>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      {% if products %}
+      <div class="product-grid">
+        {% for p in products %}{% include "partials/product_card.html" %}{% endfor %}
+      </div>
+      {% else %}
+      <div class="empty-note">
+        <p>No products match these filters. Try clearing some filters.</p>
+        <a href="{{ form_action }}" class="btn-primary">Clear Filters</a>
+      </div>
+      {% endif %}
+    </section>
+  </div>
+</div>
+
+<script>
+function toggleGroup(btn){ btn.parentElement.classList.toggle('collapsed'); }
+function applyPreset(radio){
+  var parts = radio.value.split('-');
+  var form = document.getElementById('filterForm');
+  form.querySelector('input[name=min]').value = parts[0];
+  form.querySelector('input[name=max]').value = parts[1];
+}
+function changeSort(val){
+  var url = new URL(window.location.href);
+  url.searchParams.set('sort', val);
+  window.location.href = url.toString();
+}
+</script>
+{% endblock %}

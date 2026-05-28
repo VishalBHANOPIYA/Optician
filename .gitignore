@@ -1,0 +1,10 @@
+venv/
+__pycache__/
+*.pyc
+.env
+instance/
+migrations/versions/
+app/static/uploads/
+.DS_Store
+*.sqlite
+test_eyewear.png

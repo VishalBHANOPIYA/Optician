@@ -1,0 +1,27 @@
+{% extends "admin/layout.html" %}
+{% block title %}Reserve Inbox · Admin{% endblock %}
+{% block admin_content %}
+<h1 class="admin-h1">Reserve Inbox</h1>
+<div class="status-filter">
+  {% for s in ['', 'new','contacted','reserved','fulfilled','cancelled'] %}
+    <a href="{{ url_for('admin.inquiries', status=s) }}" class="filter-pill {{ 'on' if status==s }}">{{ s or 'All' }}</a>
+  {% endfor %}
+</div>
+{% if inquiries %}
+<table class="admin-table">
+  <thead><tr><th>Customer</th><th>Phone</th><th>Product</th><th>Status</th><th>When</th><th></th></tr></thead>
+  <tbody>
+  {% for i in inquiries %}
+    <tr>
+      <td>{{ i.guest_name or 'Guest' }}</td>
+      <td>{{ i.guest_phone or '—' }}</td>
+      <td>{{ i.product.name if i.product else '—' }}</td>
+      <td><span class="badge-status s-{{ i.status }}">{{ i.status }}</span></td>
+      <td>{{ i.created_at.strftime('%d %b %Y, %H:%M') }}</td>
+      <td><a href="{{ url_for('admin.inquiry_detail', iid=i.id) }}" class="link-edit">Open</a></td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% else %}<p class="admin-empty">No requests in this view.</p>{% endif %}
+{% endblock %}

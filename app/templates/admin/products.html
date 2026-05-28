@@ -1,0 +1,37 @@
+{% extends "admin/layout.html" %}
+{% block title %}Products · Admin{% endblock %}
+{% block admin_content %}
+<div class="admin-head-row">
+  <div><h1 class="admin-h1">Products</h1><p class="admin-sub">{{ products|length }} total</p></div>
+  <a href="{{ url_for('admin.product_new') }}" class="btn-primary">+ Add Product</a>
+</div>
+
+<form method="get" class="admin-search"><input class="input" name="q" value="{{ q }}" placeholder="Search name or SKU..."><button class="btn-ghost">Search</button></form>
+
+{% if products %}
+<table class="admin-table">
+  <thead><tr><th>Name</th><th>SKU</th><th>Category</th><th>Brand</th><th>Price</th><th>Stock</th><th>Status</th><th>Flags</th><th></th></tr></thead>
+  <tbody>
+  {% for p in products %}
+    <tr>
+      <td>{{ p.name }}</td>
+      <td>{{ p.sku }}</td>
+      <td>{{ p.category.name if p.category else '—' }}</td>
+      <td>{{ p.brand.name if p.brand else '—' }}</td>
+      <td>₹{{ '%.0f'|format(p.final_price) }}{% if p.discount_price %} <s class="muted-inline">₹{{ '%.0f'|format(p.price) }}</s>{% endif %}</td>
+      <td>{{ p.stock }}</td>
+      <td>{% if p.is_active %}<span class="badge-status s-reserved">Active</span>{% else %}<span class="badge-status s-cancelled">Hidden</span>{% endif %}</td>
+      <td class="flag-cell">{% if p.is_featured %}★{% endif %}{% if p.is_bestseller %}🏷{% endif %}</td>
+      <td class="action-cell">
+        <a href="{{ url_for('admin.product_edit', pid=p.id) }}" class="link-edit">Edit</a>
+        <form method="POST" action="{{ url_for('admin.product_delete', pid=p.id) }}" onsubmit="return confirm('Delete this product?')" style="display:inline">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button class="link-del" type="submit">Delete</button>
+        </form>
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% else %}<p class="admin-empty">No products found. <a href="{{ url_for('admin.product_new') }}">Add the first one</a>.</p>{% endif %}
+{% endblock %}

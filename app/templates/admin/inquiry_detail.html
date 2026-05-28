@@ -1,0 +1,28 @@
+{% extends "admin/layout.html" %}
+{% block title %}Request #{{ inq.id }} · Admin{% endblock %}
+{% block admin_content %}
+<a href="{{ url_for('admin.inquiries') }}" class="back-link">← Back to inbox</a>
+<h1 class="admin-h1">Reserve Request #{{ inq.id }}</h1>
+<div class="admin-two-col">
+  <div class="admin-panel">
+    <div class="admin-panel-head"><h3>Details</h3></div>
+    <dl class="pdp-specs" style="margin:0">
+      <div class="spec-row"><dt>Customer</dt><dd>{{ inq.guest_name or 'Guest' }}</dd></div>
+      <div class="spec-row"><dt>Phone</dt><dd>{{ inq.guest_phone or '—' }}</dd></div>
+      <div class="spec-row"><dt>Email</dt><dd>{{ inq.guest_email or '—' }}</dd></div>
+      <div class="spec-row"><dt>Product</dt><dd>{% if inq.product %}<a href="{{ url_for('catalog.product_detail', slug=inq.product.slug) }}" target="_blank">{{ inq.product.name }}</a>{% else %}—{% endif %}</dd></div>
+      <div class="spec-row"><dt>Message</dt><dd>{{ inq.message or '—' }}</dd></div>
+      <div class="spec-row"><dt>Received</dt><dd>{{ inq.created_at.strftime('%d %b %Y, %H:%M') }}</dd></div>
+    </dl>
+  </div>
+  <div class="admin-panel">
+    <div class="admin-panel-head"><h3>Update</h3></div>
+    <form method="POST" class="admin-form">
+      {{ form.hidden_tag() }}
+      <label>{{ form.status.label }}</label>{{ form.status(class="input") }}
+      <label>{{ form.admin_notes.label }}</label>{{ form.admin_notes(class="input", rows="4") }}
+      <div style="margin-top:12px">{{ form.submit(class="btn-primary full") }}</div>
+    </form>
+  </div>
+</div>
+{% endblock %}

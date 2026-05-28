@@ -1,0 +1,45 @@
+{% extends "admin/layout.html" %}
+{% block title %}Dashboard · Admin{% endblock %}
+{% block admin_content %}
+<h1 class="admin-h1">Dashboard</h1>
+<p class="admin-sub">Welcome back, {{ current_user.username }}.</p>
+
+<div class="stat-grid">
+  <div class="stat-card"><span class="stat-num">{{ stats.products }}</span><span class="stat-label">Products</span></div>
+  <div class="stat-card"><span class="stat-num">{{ stats.active_products }}</span><span class="stat-label">Active</span></div>
+  <div class="stat-card"><span class="stat-num">{{ stats.categories }}</span><span class="stat-label">Categories</span></div>
+  <div class="stat-card"><span class="stat-num">{{ stats.brands }}</span><span class="stat-label">Brands</span></div>
+  <div class="stat-card accent"><span class="stat-num">{{ stats.new_inquiries }}</span><span class="stat-label">New Reserve Requests</span></div>
+  <div class="stat-card"><span class="stat-num">{{ stats.inquiries }}</span><span class="stat-label">Total Requests</span></div>
+</div>
+
+<div class="admin-two-col">
+  <div class="admin-panel">
+    <div class="admin-panel-head"><h3>Recent Reserve Requests</h3><a href="{{ url_for('admin.inquiries') }}">View all</a></div>
+    {% if recent %}
+    <table class="admin-table">
+      <thead><tr><th>Customer</th><th>Product</th><th>Status</th><th>When</th></tr></thead>
+      <tbody>
+      {% for i in recent %}
+        <tr onclick="location.href='{{ url_for('admin.inquiry_detail', iid=i.id) }}'" style="cursor:pointer">
+          <td>{{ i.guest_name or 'Guest' }}</td>
+          <td>{{ i.product.name if i.product else '—' }}</td>
+          <td><span class="badge-status s-{{ i.status }}">{{ i.status }}</span></td>
+          <td>{{ i.created_at.strftime('%d %b, %H:%M') }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    {% else %}<p class="admin-empty">No reserve requests yet.</p>{% endif %}
+  </div>
+
+  <div class="admin-panel">
+    <div class="admin-panel-head"><h3>Low Stock</h3><a href="{{ url_for('admin.products') }}">Manage</a></div>
+    {% if low_stock %}
+    <ul class="admin-list">
+      {% for p in low_stock %}<li><a href="{{ url_for('admin.product_edit', pid=p.id) }}">{{ p.name }}</a> <span class="muted-inline">stock: {{ p.stock }}</span></li>{% endfor %}
+    </ul>
+    {% else %}<p class="admin-empty">All products well stocked.</p>{% endif %}
+  </div>
+</div>
+{% endblock %}

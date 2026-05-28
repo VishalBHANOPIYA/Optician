@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Sign Up · {{ SHOP_NAME }}{% endblock %}
+{% block content %}
+<div class="auth-card">
+  <h2>Create your account</h2>
+  <form method="POST" novalidate>
+    {{ form.hidden_tag() }}
+    <label>{{ form.full_name.label }}</label>
+    {{ form.full_name(class="input") }}
+    {% for e in form.full_name.errors %}<small class="err">{{ e }}</small>{% endfor %}
+
+    <label>{{ form.email.label }}</label>
+    {{ form.email(class="input") }}
+    {% for e in form.email.errors %}<small class="err">{{ e }}</small>{% endfor %}
+
+    <label>{{ form.phone.label }}</label>
+    {{ form.phone(class="input", placeholder="Optional") }}
+    {% for e in form.phone.errors %}<small class="err">{{ e }}</small>{% endfor %}
+
+    <label>{{ form.password.label }}</label>
+    {{ form.password(class="input") }}
+    {% for e in form.password.errors %}<small class="err">{{ e }}</small>{% endfor %}
+
+    <label>{{ form.confirm.label }}</label>
+    {{ form.confirm(class="input") }}
+    {% for e in form.confirm.errors %}<small class="err">{{ e }}</small>{% endfor %}
+
+    {{ form.submit(class="btn-primary full") }}
+  </form>
+  <p class="muted">Already have an account? <a href="{{ url_for('auth.login') }}">Login</a></p>
+</div>
+{% endblock %}

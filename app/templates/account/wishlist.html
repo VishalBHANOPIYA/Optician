@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}My Wishlist · {{ SHOP_NAME }}{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="page-head"><h1>My Wishlist</h1></div>
+  {% if products %}
+    <div class="product-grid" style="margin-top:18px">
+      {% for p in products %}{% include "partials/product_card.html" %}{% endfor %}
+    </div>
+  {% else %}
+    <div class="empty-note" style="margin-top:18px">
+      <p>Your wishlist is empty. Browse and tap the heart to save your favourites.</p>
+      <a href="{{ url_for('catalog.category', slug='eyeglasses') }}" class="btn-primary" style="margin-top:12px">Start Browsing</a>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "admin/layout.html" %}
+{% block title %}Brands · Admin{% endblock %}
+{% block admin_content %}
+<h1 class="admin-h1">Brands</h1>
+<div class="admin-two-col">
+  <div class="admin-panel">
+    <div class="admin-panel-head"><h3>All Brands</h3></div>
+    <table class="admin-table">
+      <thead><tr><th>Name</th><th>Status</th><th></th></tr></thead>
+      <tbody>
+      {% for b in brands %}
+        <tr>
+          <td>{{ b.name }}</td>
+          <td>{% if b.is_active %}<span class="badge-status s-reserved">Active</span>{% else %}<span class="badge-status s-cancelled">Hidden</span>{% endif %}</td>
+          <td><form method="POST" action="{{ url_for('admin.brand_toggle', bid=b.id) }}" style="display:inline"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="link-edit" type="submit">{{ 'Hide' if b.is_active else 'Show' }}</button></form></td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="admin-panel">
+    <div class="admin-panel-head"><h3>Add Brand</h3></div>
+    <form method="POST" class="admin-form">
+      {{ form.hidden_tag() }}
+      <label>{{ form.name.label }}</label>{{ form.name(class="input") }}
+      <label class="checkbox">{{ form.is_active() }} Active</label>
+      <div style="margin-top:12px">{{ form.submit(class="btn-primary full") }}</div>
+    </form>
+  </div>
+</div>
+{% endblock %}

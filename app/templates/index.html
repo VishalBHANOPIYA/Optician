@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% from "partials/icons.html" import icon %}
+{% from "partials/shape_icons.html" import shape_svg %}
+{% block title %}Ayan-Optics · Pocket-friendly Eyewear in Indore{% endblock %}
+{% block content %}
+
+<section class="hero">
+  <div class="container hero-inner">
+    <div class="hero-text">
+      <p class="eyebrow">INDORE'S FAVOURITE OPTICIAN · 4.9★ (140 reviews)</p>
+      <h1>Clear vision, <span>pocket-friendly</span> prices.</h1>
+      <p class="hero-sub">1000+ frame designs and premium lens brands at honest prices. Pick online, collect in-store.</p>
+      <div class="hero-cta">
+        <a href="{{ url_for('catalog.category', slug='eyeglasses') }}" class="btn-primary big">Shop Eyeglasses</a>
+        <a href="{{ url_for('catalog.category', slug='sunglasses') }}" class="btn-ghost big">Shop Sunglasses</a>
+      </div>
+      <div class="hero-trust"><span>✔ 1000+ Designs</span><span>✔ Top Lens Brands</span><span>✔ Expert Fitting</span></div>
+    </div>
+    <div class="hero-art"><div class="hero-blob">{{ icon('glasses') }}</div></div>
+  </div>
+</section>
+
+<!-- TOP CATEGORIES -->
+<section class="container section">
+  <h2 class="section-title">Top Categories</h2>
+  <div class="cat-grid">
+    {% for cat in categories %}
+    <a href="{{ url_for('catalog.category', slug=cat.slug) }}" class="cat-tile">
+      <div class="cat-icon">{{ icon('wallet' if cat.kind=='accessory' else 'glasses') }}</div>
+      <span>{{ cat.name }}</span>
+    </a>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- SHOP BY SHAPE -->
+<section class="container section">
+  <h2 class="section-title">Get the perfect shape</h2>
+  <div class="shape-row">
+    {% for s in ['Rectangle','Cat-eye','Aviator','Round','Square','Wayfarer'] %}
+    <a href="{{ url_for('catalog.category', slug='eyeglasses', shape=s) }}" class="shape-tile">
+      <div class="shape-circle">{{ shape_svg(s) }}</div>
+      <span>{{ s }}</span>
+    </a>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="value-strip">
+  <div class="container value-inner">
+    <div class="value-item"><strong>Pocket-Friendly</strong><span>Honest, low prices</span></div>
+    <div class="value-item"><strong>Skilled Workers</strong><span>Expert fitting & advice</span></div>
+    <div class="value-item"><strong>1000+ Designs</strong><span>Huge in-store range</span></div>
+    <div class="value-item"><strong>Top Brands</strong><span>Zeiss, Essilor & more</span></div>
+  </div>
+</section>
+
+<!-- FEATURED -->
+<section class="container section">
+  <div class="section-head">
+    <h2 class="section-title">Featured Picks</h2>
+    <a href="{{ url_for('catalog.search') }}" class="see-all">View all →</a>
+  </div>
+  {% if featured %}
+  <div class="product-grid">{% for p in featured %}{% include "partials/product_card.html" %}{% endfor %}</div>
+  {% else %}
+  <div class="empty-note"><p>No featured products yet. Add some from the admin panel.</p></div>
+  {% endif %}
+</section>
+
+<!-- OUR BRANDS (cards) -->
+<section class="container section">
+  <h2 class="section-title">Lens Brands We Trust</h2>
+  <div class="brand-card-grid">
+    {% for b in brands %}
+    <a href="{{ url_for('catalog.search', brand=b.slug) }}" class="brand-card">
+      <span class="brand-card-name">{{ b.name }}</span>
+      <span class="brand-card-cta">Shop ›</span>
+    </a>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- COLLECTIONS / "Exclusively at Ayan-Optics" style promo grid -->
+<section class="container section">
+  <h2 class="section-title">Explore Collections</h2>
+  <div class="collection-grid">
+    <a href="{{ url_for('catalog.category', slug='eyeglasses', shape='Round') }}" class="collection-card c1"><div><strong>Classic Round</strong><span>Timeless frames</span></div></a>
+    <a href="{{ url_for('catalog.category', slug='computer-glasses') }}" class="collection-card c2"><div><strong>Blue-Cut</strong><span>Screen protection</span></div></a>
+    <a href="{{ url_for('catalog.category', slug='kids-glasses') }}" class="collection-card c3"><div><strong>For Kids</strong><span>Flexible & fun</span></div></a>
+    <a href="{{ url_for('catalog.category', slug='sunglasses', shape='Aviator') }}" class="collection-card c4"><div><strong>Aviator Sun</strong><span>Bold & UV-safe</span></div></a>
+    <a href="{{ url_for('catalog.category', slug='mens-wallets') }}" class="collection-card c5"><div><strong>Leather Wallets</strong><span>For men</span></div></a>
+    <a href="{{ url_for('catalog.category', slug='mens-belts') }}" class="collection-card c6"><div><strong>Formal Belts</strong><span>For men</span></div></a>
+  </div>
+</section>
+
+{% if bestsellers %}
+<section class="container section">
+  <div class="section-head"><h2 class="section-title">Bestsellers</h2><a href="{{ url_for('catalog.search', sort='newest') }}" class="see-all">View all →</a></div>
+  <div class="product-grid">{% for p in bestsellers %}{% include "partials/product_card.html" %}{% endfor %}</div>
+</section>
+{% endif %}
+
+<section class="store-cta">
+  <div class="container">
+    <h2>Visit us in Indore</h2>
+    <p>27, 60 Feet Road, Ext-1, Sukhdev Nagar, Indore, MP 452005 · Open till 11 PM</p>
+    <a href="tel:9826218888" class="btn-primary big">📞 Call 098262 18888</a>
+  </div>
+</section>
+{% endblock %}

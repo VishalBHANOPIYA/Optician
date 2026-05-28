@@ -1,0 +1,33 @@
+{% from "partials/icons.html" import icon %}
+<div class="product-card">
+  {% if is_user %}
+    <form class="wish-form" method="POST" action="{{ url_for('account.wishlist_toggle', product_id=p.id) }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <button class="wish-btn {{ 'active' if p.id in wishlist_ids else '' }}" type="submit" title="Wishlist">
+        {{ icon('heart-fill' if p.id in wishlist_ids else 'heart') }}
+      </button>
+    </form>
+  {% else %}
+    <button class="wish-btn" type="button" onclick="openSignin()" title="Wishlist">{{ icon('heart') }}</button>
+  {% endif %}
+
+  <a href="{{ url_for('catalog.product_detail', slug=p.slug) }}" class="card-link">
+    <div class="product-media">
+      {% if p.primary_image %}
+        <img src="{{ url_for('static', filename='uploads/' ~ p.primary_image) }}" alt="{{ p.name }}">
+      {% else %}
+        <div class="product-placeholder">{{ icon('wallet' if p.category and p.category.kind=='accessory' else 'glasses') }}</div>
+      {% endif %}
+      {% if p.is_bestseller %}<span class="badge-best">{{ icon('star') }} Bestseller</span>{% endif %}
+      {% if p.discount_percent %}<span class="badge-off">{{ p.discount_percent }}% OFF</span>{% endif %}
+    </div>
+    <div class="product-body">
+      {% if p.brand %}<span class="product-brand">{{ p.brand.name }}</span>{% endif %}
+      <h3 class="product-name">{{ p.name }}</h3>
+      <div class="product-price">
+        <span class="price-now">₹{{ '%.0f'|format(p.final_price) }}</span>
+        {% if p.discount_price %}<span class="price-was">₹{{ '%.0f'|format(p.price) }}</span>{% endif %}
+      </div>
+    </div>
+  </a>
+</div>

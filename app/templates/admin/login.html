@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Admin · {{ SHOP_NAME }}{% endblock %}
+{% block navbar %}{% endblock %}
+{% block content %}
+<div class="auth-card admin-card">
+  <h2>Ayan-Optics Admin</h2>
+  <form method="POST" novalidate>
+    {{ form.hidden_tag() }}
+    <label>{{ form.username.label }}</label>
+    {{ form.username(class="input") }}
+    {% for e in form.username.errors %}<small class="err">{{ e }}</small>{% endfor %}
+
+    <label>{{ form.password.label }}</label>
+    {{ form.password(class="input") }}
+    {% for e in form.password.errors %}<small class="err">{{ e }}</small>{% endfor %}
+
+    {{ form.submit(class="btn-primary full") }}
+  </form>
+</div>
+{% endblock %}

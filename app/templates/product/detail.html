@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% from "partials/icons.html" import icon %}
+{% block title %}{{ p.name }} · {{ SHOP_NAME }}{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="breadcrumb">
+    <a href="{{ url_for('main.home') }}">Home</a> /
+    {% if p.category %}<a href="{{ url_for('catalog.category', slug=p.category.slug) }}">{{ p.category.name }}</a> / {% endif %}
+    <span>{{ p.name }}</span>
+  </div>
+
+  <div class="pdp">
+    <div class="pdp-gallery">
+      <div class="pdp-main-img">
+        {% if p.images %}
+          <img id="pdpMain" src="{{ url_for('static', filename='uploads/' ~ p.images[0].filename) }}" alt="{{ p.name }}">
+        {% else %}
+          <div class="product-placeholder">{{ icon('wallet' if p.category and p.category.kind=='accessory' else 'glasses') }}</div>
+        {% endif %}
+      </div>
+      {% if p.images|length > 1 %}
+      <div class="pdp-thumbs">
+        {% for img in p.images %}
+        <div class="pdp-thumb {{ 'active' if loop.first }}" onclick="document.getElementById('pdpMain').src=this.querySelector('img').src">
+          <img src="{{ url_for('static', filename='uploads/' ~ img.filename) }}" alt="">
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="pdp-info">
+      {% if p.brand %}<span class="pdp-brand">{{ p.brand.name }}</span>{% endif %}
+      <h1>{{ p.name }}</h1>
+      <div class="pdp-price">
+        <span class="now">₹{{ '%.0f'|format(p.final_price) }}</span>
+        {% if p.discount_price %}
+          <span class="was">₹{{ '%.0f'|format(p.price) }}</span>
+          <span class="off">{{ p.discount_percent }}% OFF</span>
+        {% endif %}
+      </div>
+      <p class="pdp-tax">Inclusive of all taxes · Collect in-store at Sukhdev Nagar, Indore</p>
+
+      <div class="pdp-actions">
+        {% if is_user %}
+          <form method="POST" action="{{ url_for('account.wishlist_toggle', product_id=p.id) }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button class="btn-ghost big" type="submit">{{ icon('heart-fill' if p.id in wishlist_ids else 'heart') }} {{ 'In Wishlist' if p.id in wishlist_ids else 'Add to Wishlist' }}</button>
+          </form>
+        {% else %}
+          <button class="btn-ghost big" type="button" onclick="openSignin()">{{ icon('heart') }} Add to Wishlist</button>
+        {% endif %}
+        <a href="tel:9826218888" class="btn-coral btn-primary big">{{ icon('phone') }} Call to Ask</a>
+      </div>
+
+      <div class="trust-row">
+        <span class="trust-item">{{ icon('shield') }} Genuine products</span>
+        <span class="trust-item">{{ icon('tag') }} Pocket-friendly price</span>
+        <span class="trust-item">{{ icon('check') }} Expert fitting in-store</span>
+      </div>
+
+      <dl class="pdp-specs">
+        {% if p.brand %}<div class="spec-row"><dt>Brand</dt><dd>{{ p.brand.name }}</dd></div>{% endif %}
+        {% if p.gender %}<div class="spec-row"><dt>Gender</dt><dd>{{ p.gender }}</dd></div>{% endif %}
+        {% if p.frame_shape %}<div class="spec-row"><dt>Shape</dt><dd>{{ p.frame_shape }}</dd></div>{% endif %}
+        {% if p.frame_size %}<div class="spec-row"><dt>Frame Size</dt><dd>{{ p.frame_size }}</dd></div>{% endif %}
+        {% if p.material %}<div class="spec-row"><dt>Material</dt><dd>{{ p.material }}</dd></div>{% endif %}
+        {% if p.color %}<div class="spec-row"><dt>Colour</dt><dd>{{ p.color }}</dd></div>{% endif %}
+        {% if p.lens_type %}<div class="spec-row"><dt>Lens Type</dt><dd>{{ p.lens_type }}</dd></div>{% endif %}
+        <div class="spec-row"><dt>SKU</dt><dd>{{ p.sku }}</dd></div>
+      </dl>
+
+      {% if p.description %}<p class="pdp-desc">{{ p.description }}</p>{% endif %}
+
+      <!-- Reserve at Store -->
+      <div class="reserve-box">
+        <h4>Reserve this at the store</h4>
+        <p>No online payment, no delivery. We'll keep it ready for you to try and collect at Ayan-Optics, Indore.</p>
+        {% if is_user %}
+          <form method="POST" action="{{ url_for('account.reserve', product_id=p.id) }}">
+            {{ reserve_form.hidden_tag() }}
+            {{ reserve_form.message(class="", placeholder="Any preference? (e.g. preferred time, lens power) — optional") }}
+            <button class="btn-primary full" type="submit" style="margin-top:12px">Reserve at Store</button>
+          </form>
+        {% else %}
+          <button class="btn-primary full" type="button" onclick="openSignin()">Sign in to Reserve</button>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  {% if related %}
+  <section class="section" style="padding-left:0;padding-right:0">
+    <h2 class="section-title">You may also like</h2>
+    <div class="product-grid">{% for p in related %}{% include "partials/product_card.html" %}{% endfor %}</div>
+  </section>
+  {% endif %}
+</div>
+{% endblock %}

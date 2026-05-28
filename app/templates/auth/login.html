@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Login · {{ SHOP_NAME }}{% endblock %}
+{% block content %}
+<div class="auth-card">
+  <h2>Login</h2>
+  <form method="POST" novalidate>
+    {{ form.hidden_tag() }}
+    <label>{{ form.email.label }}</label>
+    {{ form.email(class="input", placeholder="you@example.com") }}
+    {% for e in form.email.errors %}<small class="err">{{ e }}</small>{% endfor %}
+
+    <label>{{ form.password.label }}</label>
+    {{ form.password(class="input", placeholder="Your password") }}
+    {% for e in form.password.errors %}<small class="err">{{ e }}</small>{% endfor %}
+
+    <div class="row-between">
+      <label class="checkbox">{{ form.remember() }} Remember me</label>
+    </div>
+    {{ form.submit(class="btn-primary full") }}
+  </form>
+  <p class="muted">New here? <a href="{{ url_for('auth.signup') }}">Create an account</a></p>
+</div>
+{% endblock %}

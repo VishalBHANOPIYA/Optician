@@ -1,0 +1,15 @@
+{% macro shape_svg(shape) %}
+{% if shape == 'Rectangle' %}
+<svg viewBox="0 0 100 40"><rect x="6" y="10" width="36" height="20" rx="4"/><rect x="58" y="10" width="36" height="20" rx="4"/><line x1="42" y1="18" x2="58" y2="18"/></svg>
+{% elif shape == 'Round' %}
+<svg viewBox="0 0 100 40"><circle cx="26" cy="20" r="15"/><circle cx="74" cy="20" r="15"/><line x1="41" y1="20" x2="59" y2="20"/></svg>
+{% elif shape == 'Cat-eye' %}
+<svg viewBox="0 0 100 40"><path d="M8 14 Q24 6 42 16 Q26 32 8 26 Z"/><path d="M92 14 Q76 6 58 16 Q74 32 92 26 Z"/><line x1="42" y1="18" x2="58" y2="18"/></svg>
+{% elif shape == 'Aviator' %}
+<svg viewBox="0 0 100 40"><path d="M8 12 H42 L36 32 Q24 36 14 30 Z"/><path d="M92 12 H58 L64 32 Q76 36 86 30 Z"/><line x1="42" y1="16" x2="58" y2="16"/></svg>
+{% elif shape == 'Square' %}
+<svg viewBox="0 0 100 40"><rect x="6" y="8" width="34" height="24" rx="3"/><rect x="60" y="8" width="34" height="24" rx="3"/><line x1="40" y1="18" x2="60" y2="18"/></svg>
+{% elif shape == 'Wayfarer' %}
+<svg viewBox="0 0 100 40"><path d="M6 12 H44 L40 30 H10 Z"/><path d="M94 12 H56 L60 30 H90 Z"/><line x1="44" y1="16" x2="56" y2="16"/></svg>
+{% endif %}
+{% endmacro %}

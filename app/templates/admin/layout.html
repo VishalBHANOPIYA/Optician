@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}Admin · Ayan-Optics{% endblock %}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="admin-body">
+<div class="admin-layout">
+  <aside class="admin-sidebar">
+    <div class="admin-brand"><span class="logo-mark">A</span> Ayan Admin</div>
+    <nav class="admin-nav">
+      <a href="{{ url_for('admin.dashboard') }}" class="{{ 'on' if request.endpoint=='admin.dashboard' }}">Dashboard</a>
+      <a href="{{ url_for('admin.products') }}" class="{{ 'on' if 'product' in request.endpoint }}">Products</a>
+      <a href="{{ url_for('admin.categories') }}" class="{{ 'on' if request.endpoint=='admin.categories' }}">Categories</a>
+      <a href="{{ url_for('admin.brands') }}" class="{{ 'on' if request.endpoint=='admin.brands' }}">Brands</a>
+      <a href="{{ url_for('admin.inquiries') }}" class="{{ 'on' if 'inquir' in request.endpoint }}">Reserve Inbox</a>
+      <div class="admin-nav-sep"></div>
+      <a href="{{ url_for('main.home') }}" target="_blank">View Site ↗</a>
+      <a href="{{ url_for('admin_auth.logout') }}">Logout</a>
+    </nav>
+  </aside>
+  <main class="admin-main">
+    <div class="flash-wrap" style="margin:0 0 16px;padding:0">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}<div class="flash flash-{{ category }}">{{ message }}</div>{% endfor %}
+      {% endwith %}
+    </div>
+    {% block admin_content %}{% endblock %}
+  </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,60 @@
+{% extends "admin/layout.html" %}
+{% block title %}{{ 'Edit' if mode=='edit' else 'New' }} Product · Admin{% endblock %}
+{% block admin_content %}
+<h1 class="admin-h1">{{ 'Edit Product' if mode=='edit' else 'New Product' }}</h1>
+
+<form method="POST" enctype="multipart/form-data" class="admin-form">
+  {{ form.hidden_tag() }}
+  <div class="form-grid">
+    <div class="fg span2"><label>{{ form.name.label }}</label>{{ form.name(class="input") }}</div>
+    <div class="fg"><label>{{ form.sku.label }}</label>{{ form.sku(class="input") }}</div>
+    <div class="fg"><label>{{ form.category_id.label }}</label>{{ form.category_id(class="input") }}</div>
+    <div class="fg"><label>{{ form.brand_id.label }}</label>{{ form.brand_id(class="input") }}</div>
+    <div class="fg"><label>{{ form.price.label }}</label>{{ form.price(class="input") }}</div>
+    <div class="fg"><label>{{ form.discount_price.label }}</label>{{ form.discount_price(class="input") }}</div>
+    <div class="fg"><label>{{ form.stock.label }}</label>{{ form.stock(class="input") }}</div>
+    <div class="fg"><label>{{ form.gender.label }}</label>{{ form.gender(class="input") }}</div>
+    <div class="fg"><label>{{ form.frame_shape.label }}</label>{{ form.frame_shape(class="input") }}</div>
+    <div class="fg"><label>{{ form.frame_size.label }}</label>{{ form.frame_size(class="input") }}</div>
+    <div class="fg"><label>{{ form.lens_type.label }}</label>{{ form.lens_type(class="input") }}</div>
+    <div class="fg"><label>{{ form.material.label }}</label>{{ form.material(class="input") }}</div>
+    <div class="fg"><label>{{ form.color.label }}</label>{{ form.color(class="input") }}</div>
+    <div class="fg"><label>{{ form.accessory_size.label }}</label>{{ form.accessory_size(class="input") }}</div>
+    <div class="fg span2"><label>{{ form.description.label }}</label>{{ form.description(class="input", rows="4") }}</div>
+  </div>
+
+  <div class="checks-row">
+    <label class="checkbox">{{ form.is_active() }} Active</label>
+    <label class="checkbox">{{ form.is_featured() }} Featured</label>
+    <label class="checkbox">{{ form.is_bestseller() }} Bestseller</label>
+    <label class="checkbox">{{ form.is_prescription_ready() }} Prescription Ready</label>
+  </div>
+
+  <div class="fg span2" style="margin-top:14px">
+    <label>Add Images (you can select multiple)</label>
+    <input class="input" type="file" name="images" accept="image/*" multiple>
+  </div>
+
+  {% if product and product.images %}
+  <div class="existing-images">
+    <label>Current Images</label>
+    <div class="img-thumbs">
+      {% for img in product.images %}
+      <div class="img-thumb">
+        <img src="{{ url_for('static', filename='uploads/' ~ img.filename) }}" alt="">
+        <form method="POST" action="{{ url_for('admin.product_image_delete', image_id=img.id) }}" onsubmit="return confirm('Remove this image?')">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button class="img-del" type="submit">✕</button>
+        </form>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  <div style="margin-top:20px;display:flex;gap:12px">
+    {{ form.submit(class="btn-primary") }}
+    <a href="{{ url_for('admin.products') }}" class="btn-ghost">Cancel</a>
+  </div>
+</form>
+{% endblock %}

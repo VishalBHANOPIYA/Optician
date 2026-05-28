@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}{{ SHOP_NAME }} · Eyewear in Indore{% endblock %}</title>
+<meta name="description" content="{% block meta_desc %}Ayan-Optics, Indore — pocket-friendly eyeglasses, sunglasses, kids glasses, men's wallets and belts.{% endblock %}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+{% block head %}{% endblock %}
+</head>
+<body>
+{% from "partials/icons.html" import icon %}
+{% from "partials/shape_icons.html" import shape_svg %}
+{% set is_user = current_user.is_authenticated and current_user.__class__.__name__ == 'User' %}
+{% block navbar %}
+<div class="utility-bar">
+  <div class="container util-inner">
+    <span>Open till 11 PM · Sukhdev Nagar, Indore · ⭐ 4.9 (140 reviews)</span>
+    <span class="util-phone">{{ SHOP_PHONE }}</span>
+  </div>
+</div>
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="{{ url_for('main.home') }}" class="logo">
+      <span class="logo-mark">A</span><span class="logo-text">Ayan-Optics</span>
+    </a>
+    <nav class="primary-nav">
+      <div class="nav-item">
+        <a href="{{ url_for('catalog.category', slug='eyeglasses') }}">Eyeglasses ▾</a>
+        <div class="mega">
+          <div class="mega-col"><h5>Men</h5>
+            <a href="{{ url_for('catalog.category', slug='eyeglasses', gender='Men') }}">All Men</a>
+            {% for s in ['Rectangle','Round','Aviator','Square'] %}<a href="{{ url_for('catalog.category', slug='eyeglasses', gender='Men', shape=s) }}">{{ s }}</a>{% endfor %}
+          </div>
+          <div class="mega-col"><h5>Women</h5>
+            <a href="{{ url_for('catalog.category', slug='eyeglasses', gender='Women') }}">All Women</a>
+            {% for s in ['Cat-eye','Round','Square','Wayfarer'] %}<a href="{{ url_for('catalog.category', slug='eyeglasses', gender='Women', shape=s) }}">{{ s }}</a>{% endfor %}
+          </div>
+          <div class="mega-col"><h5>Kids</h5>
+            <a href="{{ url_for('catalog.category', slug='kids-glasses') }}">All Kids Glasses</a>
+            <a href="{{ url_for('catalog.category', slug='kids-glasses', shape='Round') }}">Round</a>
+            <a href="{{ url_for('catalog.category', slug='kids-glasses', shape='Square') }}">Square</a>
+          </div>
+          <div class="mega-col mega-promo"><h5>Lens Brands</h5>
+            <p>Zeiss · Essilor · Crizal<br>Rodenstock · Kodak · Nova</p>
+            <span class="mega-tag">Pocket-friendly prices</span>
+          </div>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="{{ url_for('catalog.category', slug='sunglasses') }}">Sunglasses ▾</a>
+        <div class="mega">
+          <div class="mega-col"><h5>Men</h5><a href="{{ url_for('catalog.category', slug='sunglasses', gender='Men') }}">All Men</a>{% for s in ['Aviator','Wayfarer','Square'] %}<a href="{{ url_for('catalog.category', slug='sunglasses', gender='Men', shape=s) }}">{{ s }}</a>{% endfor %}</div>
+          <div class="mega-col"><h5>Women</h5><a href="{{ url_for('catalog.category', slug='sunglasses', gender='Women') }}">All Women</a>{% for s in ['Cat-eye','Round','Aviator'] %}<a href="{{ url_for('catalog.category', slug='sunglasses', gender='Women', shape=s) }}">{{ s }}</a>{% endfor %}</div>
+          <div class="mega-col"><h5>Kids</h5><a href="{{ url_for('catalog.category', slug='sunglasses', gender='Kids') }}">Kids Sunglasses</a></div>
+        </div>
+      </div>
+      <a href="{{ url_for('catalog.category', slug='computer-glasses') }}">Computer</a>
+      <a href="{{ url_for('catalog.category', slug='reading-glasses') }}">Reading</a>
+      <div class="nav-item">
+        <a href="{{ url_for('catalog.category', slug='mens-wallets') }}">Wallets &amp; Belts ▾</a>
+        <div class="mega mega-small"><div class="mega-col"><h5>Accessories</h5>
+          <a href="{{ url_for('catalog.category', slug='mens-wallets') }}">Men's Wallets</a>
+          <a href="{{ url_for('catalog.category', slug='mens-belts') }}">Men's Belts</a>
+        </div></div>
+      </div>
+    </nav>
+
+    <form class="search-box" action="{{ url_for('catalog.search') }}" method="get">
+      <input type="text" name="q" placeholder="Search eyeglasses, sunglasses, wallets..." value="{{ request.args.get('q','') }}">
+      <button type="submit" aria-label="Search">{{ icon('search') }}</button>
+    </form>
+
+    <div class="header-icons">
+      {% if is_user %}
+        <a href="{{ url_for('account.wishlist') }}" class="icon-link" title="Wishlist">{{ icon('heart') }}</a>
+        <div class="acct">
+          <span class="icon-link" title="Account">{{ icon('user') }}</span>
+          <div class="acct-menu">
+            <a href="{{ url_for('account.wishlist') }}">My Wishlist</a>
+            <a href="{{ url_for('auth.logout') }}">Logout</a>
+          </div>
+        </div>
+      {% else %}
+        <button class="icon-link" title="Wishlist" onclick="openSignin()">{{ icon('heart') }}</button>
+        <button class="icon-link" title="Login" onclick="openSignin()">{{ icon('user') }}</button>
+      {% endif %}
+    </div>
+  </div>
+</header>
+{% endblock %}
+
+<div class="flash-wrap">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% for category, message in messages %}<div class="flash flash-{{ category }}">{{ message }}</div>{% endfor %}
+  {% endwith %}
+</div>
+
+<main>{% block content %}{% endblock %}</main>
+
+{% block footer %}
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div><h4>Ayan-Optics</h4>
+      <p>27, 60 Feet Road, Ext-1, Sukhdev Nagar, Indore, MP 452005</p>
+      <p>📞 {{ SHOP_PHONE }} · Open till 11 PM</p>
+      <p>⭐ 4.9 (140 Google reviews)</p>
+    </div>
+    <div><h4>Shop</h4>
+      <a href="{{ url_for('catalog.category', slug='eyeglasses') }}">Eyeglasses</a>
+      <a href="{{ url_for('catalog.category', slug='sunglasses') }}">Sunglasses</a>
+      <a href="{{ url_for('catalog.category', slug='computer-glasses') }}">Computer Glasses</a>
+      <a href="{{ url_for('catalog.category', slug='kids-glasses') }}">Kids Glasses</a>
+    </div>
+    <div><h4>Accessories</h4>
+      <a href="{{ url_for('catalog.category', slug='mens-wallets') }}">Men's Wallets</a>
+      <a href="{{ url_for('catalog.category', slug='mens-belts') }}">Men's Belts</a>
+    </div>
+    <div><h4>Lens Brands</h4>
+      <p>Zeiss · Essilor · Crizal · Rodenstock · Kodak · Nova · Blumax · Satin · SeeOne</p>
+    </div>
+  </div>
+  <div class="footer-bottom container"><span>© 2024 Ayan-Optics, Indore. All rights reserved.</span></div>
+</footer>
+{% endblock %}
+
+<!-- Sign-in popup (shown only when a guest tries a special action) -->
+{% if not is_user %}
+<div class="modal-overlay" id="signinModal" onclick="if(event.target===this)closeSignin()">
+  <div class="modal">
+    <button class="modal-close" onclick="closeSignin()">{{ icon('close') }}</button>
+    <div class="modal-banner">{{ icon('glasses') }}</div>
+    <h3>Sign in to continue</h3>
+    <p class="sub">Log in to save favourites and reserve items at the store. Browsing stays free.</p>
+    <form method="POST" action="{{ url_for('auth.login', next=request.full_path) }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <label>Email</label>
+      <input class="input" type="email" name="email" placeholder="you@example.com" required>
+      <label>Password</label>
+      <input class="input" type="password" name="password" placeholder="Your password" required>
+      <label class="checkbox"><input type="checkbox" name="remember"> Remember me</label>
+      <button class="btn-primary full" type="submit" style="margin-top:14px">Sign In</button>
+    </form>
+    <p class="muted">New here? <a href="{{ url_for('auth.signup', next=request.full_path) }}">Create an account</a></p>
+  </div>
+</div>
+{% endif %}
+
+<script>
+function openSignin(){var m=document.getElementById('signinModal');if(m){m.classList.add('open');document.body.style.overflow='hidden';}}
+function closeSignin(){var m=document.getElementById('signinModal');if(m){m.classList.remove('open');document.body.style.overflow='';}}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeSignin();});
+</script>
+</body>
+</html>
