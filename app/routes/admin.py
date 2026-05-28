@@ -3,11 +3,12 @@ import uuid
 from slugify import slugify
 from flask import (Blueprint, render_template, redirect, url_for, flash,
                    request, current_app, abort)
+from flask_login import current_user
 from werkzeug.utils import secure_filename
 from PIL import Image
 from app.extensions import db
 from app.models import Product, Category, Brand, ProductImage, Inquiry
-from app.forms.admin import ProductForm, CategoryForm, BrandForm, InquiryForm
+from app.forms.admin import ProductForm, CategoryForm, BrandForm, InquiryForm, ChangePasswordForm
 from app.utils.decorators import admin_required
 
 admin_bp = Blueprint("admin", __name__)
@@ -276,3 +277,19 @@ def inquiry_detail(iid):
         flash("Inquiry updated.", "success")
         return redirect(url_for("admin.inquiries"))
     return render_template("admin/inquiry_detail.html", inq=inq, form=form)
+
+
+# ---------- Change Password ----------
+@admin_bp.route("/change-password", methods=["GET", "POST"])
+@admin_required
+def change_password():
+    form = ChangePasswordForm()
+    if form.validate_on_submit():
+        if not current_user.check_password(form.current_password.data):
+            flash("Current password is incorrect.", "danger")
+        else:
+            current_user.set_password(form.new_password.data)
+            db.session.commit()
+            flash("Password changed successfully.", "success")
+            return redirect(url_for("admin.dashboard"))
+    return render_template("admin/change_password.html", form=form)

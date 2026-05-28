@@ -369,3 +369,20 @@ label{font-size:13px;color:var(--ink);font-weight:600}
   .admin-form .form-grid{grid-template-columns:1fr}
 }
 
+/* WhatsApp float */
+.wa-float{position:fixed;right:22px;bottom:22px;width:58px;height:58px;border-radius:50%;background:#25D366;color:#fff;display:grid;place-items:center;box-shadow:0 8px 24px rgba(37,211,102,.45);z-index:200;transition:.18s}
+.wa-float:hover{transform:scale(1.07);color:#fff}
+.wa-float svg{width:32px;height:32px}
+/* Contact page */
+.contact-grid{display:grid;grid-template-columns:1fr 1.3fr;gap:32px;align-items:stretch}
+.contact-info{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:26px;box-shadow:var(--sh-1)}
+.contact-info h3{font-size:20px;margin-bottom:16px}
+.ci-row{display:flex;align-items:center;gap:12px;margin-bottom:14px;color:var(--ink-soft);font-size:15px}
+.ci-row .icon{width:22px;height:22px;color:var(--teal);flex:none}
+.contact-map{border-radius:var(--r);overflow:hidden;border:1px solid var(--line);min-height:380px}
+.contact-map iframe{width:100%;height:100%;min-height:380px;border:0}
+/* Error page */
+.error-page{text-align:center;padding:90px 20px}
+.error-page h1{font-size:72px;color:var(--teal);font-family:var(--font-display)}
+.error-page p{color:var(--muted);margin:10px 0 22px}
+@media(max-width:800px){.contact-grid{grid-template-columns:1fr}}

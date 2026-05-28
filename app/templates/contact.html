@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% from "partials/icons.html" import icon %}
+{% block title %}Contact & Store · {{ SHOP_NAME }}{% endblock %}
+{% block content %}
+<section class="hero" style="padding:0">
+  <div class="container hero-inner" style="padding:48px 24px">
+    <div class="hero-text">
+      <p class="eyebrow">VISIT US</p>
+      <h1>Come say <span>hi</span> in Indore.</h1>
+      <p class="hero-sub">No online payment, no delivery — just honest, pocket-friendly eyewear and expert fitting at our store. Reserve online and collect in person.</p>
+      <div class="hero-cta">
+        <a href="tel:{{ SHOP_PHONE_RAW }}" class="btn-primary big">{{ icon('phone') }} Call {{ SHOP_PHONE }}</a>
+        <a href="https://wa.me/{{ SHOP_WHATSAPP }}" target="_blank" class="btn-ghost big">WhatsApp Us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="container section">
+  <div class="contact-grid">
+    <div class="contact-info">
+      <h3>Store Details</h3>
+      <p class="ci-row">{{ icon('pin') }} <span>{{ SHOP_ADDRESS }}</span></p>
+      <p class="ci-row">{{ icon('phone') }} <span>{{ SHOP_PHONE }}</span></p>
+      <p class="ci-row">{{ icon('check') }} <span>Open every day till 11 PM</span></p>
+      <p class="ci-row">{{ icon('star') }} <span>4.9 ★ rated · 140 Google reviews</span></p>
+      <a href="https://www.google.com/maps/dir/?api=1&destination=Ayan+Opticals+Sukhdev+Nagar+Indore" target="_blank" class="btn-primary" style="margin-top:14px">Get Directions</a>
+    </div>
+    <div class="contact-map">
+      <iframe title="Ayan-Optics location" src="https://www.google.com/maps?q=27%2C+60+Feet+Road+Sukhdev+Nagar+Indore&output=embed" loading="lazy"></iframe>
+    </div>
+  </div>
+</section>
+{% endblock %}

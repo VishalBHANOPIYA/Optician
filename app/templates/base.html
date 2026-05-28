@@ -4,7 +4,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{% block title %}{{ SHOP_NAME }} · Eyewear in Indore{% endblock %}</title>
-<meta name="description" content="{% block meta_desc %}Ayan-Optics, Indore — pocket-friendly eyeglasses, sunglasses, kids glasses, men's wallets and belts.{% endblock %}">
+<meta name="description" content="{% block meta_desc %}Ayan-Optics, Indore — pocket-friendly eyeglasses, sunglasses, kids glasses, computer glasses, men's wallets and belts. Top lens brands, expert fitting.{% endblock %}">
+<link rel="canonical" href="{{ request.url }}">
+<meta name="robots" content="index, follow">
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ayan-Optics">
+<meta property="og:title" content="{{ self.title() }}">
+<meta property="og:description" content="{{ self.meta_desc() }}">
+<meta property="og:url" content="{{ request.url }}">
+<meta property="og:image" content="{{ url_for('static', filename='images/og.png', _external=True) }}">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,&lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'&gt;&lt;rect width='64' height='64' rx='14' fill='%230E8F8F'/&gt;&lt;text x='50%25' y='54%25' font-size='38' font-family='sans-serif' font-weight='800' fill='white' text-anchor='middle' dominant-baseline='middle'&gt;A&lt;/text&gt;&lt;/svg&gt;">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
@@ -24,30 +35,15 @@
 </div>
 <header class="site-header">
   <div class="container header-inner">
-    <a href="{{ url_for('main.home') }}" class="logo">
-      <span class="logo-mark">A</span><span class="logo-text">Ayan-Optics</span>
-    </a>
+    <a href="{{ url_for('main.home') }}" class="logo"><span class="logo-mark">A</span><span class="logo-text">Ayan-Optics</span></a>
     <nav class="primary-nav">
       <div class="nav-item">
         <a href="{{ url_for('catalog.category', slug='eyeglasses') }}">Eyeglasses ▾</a>
         <div class="mega">
-          <div class="mega-col"><h5>Men</h5>
-            <a href="{{ url_for('catalog.category', slug='eyeglasses', gender='Men') }}">All Men</a>
-            {% for s in ['Rectangle','Round','Aviator','Square'] %}<a href="{{ url_for('catalog.category', slug='eyeglasses', gender='Men', shape=s) }}">{{ s }}</a>{% endfor %}
-          </div>
-          <div class="mega-col"><h5>Women</h5>
-            <a href="{{ url_for('catalog.category', slug='eyeglasses', gender='Women') }}">All Women</a>
-            {% for s in ['Cat-eye','Round','Square','Wayfarer'] %}<a href="{{ url_for('catalog.category', slug='eyeglasses', gender='Women', shape=s) }}">{{ s }}</a>{% endfor %}
-          </div>
-          <div class="mega-col"><h5>Kids</h5>
-            <a href="{{ url_for('catalog.category', slug='kids-glasses') }}">All Kids Glasses</a>
-            <a href="{{ url_for('catalog.category', slug='kids-glasses', shape='Round') }}">Round</a>
-            <a href="{{ url_for('catalog.category', slug='kids-glasses', shape='Square') }}">Square</a>
-          </div>
-          <div class="mega-col mega-promo"><h5>Lens Brands</h5>
-            <p>Zeiss · Essilor · Crizal<br>Rodenstock · Kodak · Nova</p>
-            <span class="mega-tag">Pocket-friendly prices</span>
-          </div>
+          <div class="mega-col"><h5>Men</h5><a href="{{ url_for('catalog.category', slug='eyeglasses', gender='Men') }}">All Men</a>{% for s in ['Rectangle','Round','Aviator','Square'] %}<a href="{{ url_for('catalog.category', slug='eyeglasses', gender='Men', shape=s) }}">{{ s }}</a>{% endfor %}</div>
+          <div class="mega-col"><h5>Women</h5><a href="{{ url_for('catalog.category', slug='eyeglasses', gender='Women') }}">All Women</a>{% for s in ['Cat-eye','Round','Square','Wayfarer'] %}<a href="{{ url_for('catalog.category', slug='eyeglasses', gender='Women', shape=s) }}">{{ s }}</a>{% endfor %}</div>
+          <div class="mega-col"><h5>Kids</h5><a href="{{ url_for('catalog.category', slug='kids-glasses') }}">All Kids Glasses</a><a href="{{ url_for('catalog.category', slug='kids-glasses', shape='Round') }}">Round</a><a href="{{ url_for('catalog.category', slug='kids-glasses', shape='Square') }}">Square</a></div>
+          <div class="mega-col mega-promo"><h5>Lens Brands</h5><p>Zeiss · Essilor · Crizal<br>Rodenstock · Kodak · Nova</p><span class="mega-tag">Pocket-friendly prices</span></div>
         </div>
       </div>
       <div class="nav-item">
@@ -62,27 +58,19 @@
       <a href="{{ url_for('catalog.category', slug='reading-glasses') }}">Reading</a>
       <div class="nav-item">
         <a href="{{ url_for('catalog.category', slug='mens-wallets') }}">Wallets &amp; Belts ▾</a>
-        <div class="mega mega-small"><div class="mega-col"><h5>Accessories</h5>
-          <a href="{{ url_for('catalog.category', slug='mens-wallets') }}">Men's Wallets</a>
-          <a href="{{ url_for('catalog.category', slug='mens-belts') }}">Men's Belts</a>
-        </div></div>
+        <div class="mega mega-small"><div class="mega-col"><h5>Accessories</h5><a href="{{ url_for('catalog.category', slug='mens-wallets') }}">Men's Wallets</a><a href="{{ url_for('catalog.category', slug='mens-belts') }}">Men's Belts</a></div></div>
       </div>
+      <a href="{{ url_for('main.contact') }}">Stores</a>
     </nav>
-
     <form class="search-box" action="{{ url_for('catalog.search') }}" method="get">
       <input type="text" name="q" placeholder="Search eyeglasses, sunglasses, wallets..." value="{{ request.args.get('q','') }}">
       <button type="submit" aria-label="Search">{{ icon('search') }}</button>
     </form>
-
     <div class="header-icons">
       {% if is_user %}
         <a href="{{ url_for('account.wishlist') }}" class="icon-link" title="Wishlist">{{ icon('heart') }}</a>
-        <div class="acct">
-          <span class="icon-link" title="Account">{{ icon('user') }}</span>
-          <div class="acct-menu">
-            <a href="{{ url_for('account.wishlist') }}">My Wishlist</a>
-            <a href="{{ url_for('auth.logout') }}">Logout</a>
-          </div>
+        <div class="acct"><span class="icon-link" title="Account">{{ icon('user') }}</span>
+          <div class="acct-menu"><a href="{{ url_for('account.wishlist') }}">My Wishlist</a><a href="{{ url_for('auth.logout') }}">Logout</a></div>
         </div>
       {% else %}
         <button class="icon-link" title="Wishlist" onclick="openSignin()">{{ icon('heart') }}</button>
@@ -105,7 +93,7 @@
 <footer class="site-footer">
   <div class="container footer-grid">
     <div><h4>Ayan-Optics</h4>
-      <p>27, 60 Feet Road, Ext-1, Sukhdev Nagar, Indore, MP 452005</p>
+      <p>{{ SHOP_ADDRESS }}</p>
       <p>📞 {{ SHOP_PHONE }} · Open till 11 PM</p>
       <p>⭐ 4.9 (140 Google reviews)</p>
     </div>
@@ -118,6 +106,8 @@
     <div><h4>Accessories</h4>
       <a href="{{ url_for('catalog.category', slug='mens-wallets') }}">Men's Wallets</a>
       <a href="{{ url_for('catalog.category', slug='mens-belts') }}">Men's Belts</a>
+      <a href="{{ url_for('main.contact') }}">Contact / Stores</a>
+      <a href="{{ url_for('main.about') }}">About Us</a>
     </div>
     <div><h4>Lens Brands</h4>
       <p>Zeiss · Essilor · Crizal · Rodenstock · Kodak · Nova · Blumax · Satin · SeeOne</p>
@@ -126,6 +116,24 @@
   <div class="footer-bottom container"><span>© 2024 Ayan-Optics, Indore. All rights reserved.</span></div>
 </footer>
 {% endblock %}
+
+<!-- Floating WhatsApp -->
+<a class="wa-float" href="https://wa.me/{{ SHOP_WHATSAPP }}?text=Hi%20Ayan-Optics%2C%20I%20have%20a%20question" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 32 32" fill="currentColor"><path d="M16 3C9 3 3.5 8.5 3.5 15.5c0 2.4.7 4.6 1.8 6.5L3 29l7.2-2.2c1.8 1 3.8 1.5 5.8 1.5 7 0 12.5-5.5 12.5-12.5S23 3 16 3zm0 22.7c-1.8 0-3.5-.5-5-1.4l-.4-.2-4.3 1.3 1.3-4.1-.3-.4a10 10 0 01-1.6-5.4C5.4 9.7 10.1 5 16 5s10.6 4.7 10.6 10.5S21.9 25.7 16 25.7zm5.8-7.8c-.3-.2-1.9-.9-2.1-1-.3-.1-.5-.2-.7.2s-.8 1-1 1.2-.4.2-.7 0c-.3-.2-1.4-.5-2.6-1.6-1-.9-1.6-1.9-1.8-2.3s0-.5.2-.7l.5-.6c.2-.2.2-.3.3-.6s.1-.4 0-.6-.7-1.7-1-2.3c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.4-1.2 1.2-1.2 2.9s1.2 3.4 1.4 3.6c.2.2 2.5 3.8 6 5.3.8.4 1.5.6 2 .7.8.3 1.6.2 2.2.1.7-.1 1.9-.8 2.2-1.5.3-.7.3-1.4.2-1.5s-.3-.2-.6-.4z"/></svg>
+</a>
+
+<!-- LocalBusiness structured data for SEO -->
+<script type="application/ld+json">
+{
+ "@context":"https://schema.org","@type":"Optician",
+ "name":"Ayan-Optics","image":"{{ url_for('static', filename='images/og.png', _external=True) }}",
+ "telephone":"+91-9826218888","priceRange":"₹₹",
+ "address":{"@type":"PostalAddress","streetAddress":"27, 60 Feet Road, Ext-1, Sukhdev Nagar","addressLocality":"Indore","addressRegion":"MP","postalCode":"452005","addressCountry":"IN"},
+ "geo":{"@type":"GeoCoordinates","latitude":22.7461,"longitude":75.8890},
+ "openingHours":"Mo-Su 10:00-23:00",
+ "aggregateRating":{"@type":"AggregateRating","ratingValue":"4.9","reviewCount":"140"}
+}
+</script>
 
 <!-- Sign-in popup (shown only when a guest tries a special action) -->
 {% if not is_user %}
@@ -137,10 +145,8 @@
     <p class="sub">Log in to save favourites and reserve items at the store. Browsing stays free.</p>
     <form method="POST" action="{{ url_for('auth.login', next=request.full_path) }}">
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-      <label>Email</label>
-      <input class="input" type="email" name="email" placeholder="you@example.com" required>
-      <label>Password</label>
-      <input class="input" type="password" name="password" placeholder="Your password" required>
+      <label>Email</label><input class="input" type="email" name="email" placeholder="you@example.com" required>
+      <label>Password</label><input class="input" type="password" name="password" placeholder="Your password" required>
       <label class="checkbox"><input type="checkbox" name="remember"> Remember me</label>
       <button class="btn-primary full" type="submit" style="margin-top:14px">Sign In</button>
     </form>

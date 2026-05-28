@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import (StringField, DecimalField, IntegerField, SelectField,
-                     BooleanField, TextAreaField, SubmitField)
-from wtforms.validators import DataRequired, Optional, NumberRange, Length
+                     BooleanField, TextAreaField, SubmitField, PasswordField)
+from wtforms.validators import DataRequired, Optional, NumberRange, Length, EqualTo
 
 GENDER_CHOICES = [("Men", "Men"), ("Women", "Women"), ("Unisex", "Unisex"), ("Kids", "Kids")]
 SIZE_CHOICES = [("", "Any / N/A"), ("Small", "Small"), ("Medium", "Medium"), ("Large", "Large")]
@@ -52,3 +52,10 @@ class InquiryForm(FlaskForm):
         ("fulfilled", "Fulfilled"), ("cancelled", "Cancelled")])
     admin_notes = TextAreaField("Internal Notes", validators=[Optional(), Length(max=1000)])
     submit = SubmitField("Update")
+
+
+class ChangePasswordForm(FlaskForm):
+    current_password = PasswordField("Current Password", validators=[DataRequired()])
+    new_password = PasswordField("New Password", validators=[DataRequired(), Length(min=8, max=128)])
+    confirm = PasswordField("Confirm New Password", validators=[DataRequired(), EqualTo("new_password", message="Passwords must match")])
+    submit = SubmitField("Change Password")

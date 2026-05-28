@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+{% block title %}File too large{% endblock %}
+{% block content %}
+<div class="error-page"><h1>Image too large</h1><p>Please upload an image under 8 MB.</p><a href="{{ url_for('main.home') }}" class="btn-primary">Go Back</a></div>
+{% endblock %}

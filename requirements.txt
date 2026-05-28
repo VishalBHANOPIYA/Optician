@@ -9,3 +9,4 @@ email-validator==2.2.0
 Pillow==10.4.0
 Werkzeug==3.0.4
 python-slugify==8.0.4
+gunicorn==22.0.0
