@@ -36,6 +36,15 @@ def contact():
     return render_template("contact.html")
 
 
+@main_bp.route("/contact-lenses")
+def contact_lenses():
+    featured_lenses = (Product.query
+                       .join(Category)
+                       .filter(Category.kind == "lenses", Product.is_active == True)
+                       .limit(8).all())
+    return render_template("contact_lenses.html", featured_lenses=featured_lenses)
+
+
 @main_bp.route("/about")
 def about():
     return render_template("about.html")

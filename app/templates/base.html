@@ -74,6 +74,11 @@
           </div>
         </div>
       </li>
+      <li>
+        <a href="{{ url_for('main.contact_lenses') }}" class="nav-lenses-link" style="color: #0096c7; font-weight: 700; display: flex; align-items: center; gap: 6px;">
+          Contact Lenses <span class="nav-lenses-badge">AQUALENS</span>
+        </a>
+      </li>
       <li><a href="{{ url_for('main.contact') }}">Our Store</a></li>
     </ul>
     <div class="nav-actions">
@@ -95,6 +100,7 @@
   </div>
 </nav>
 <div class="sub-nav"><div class="sub-nav-inner">
+  <a href="{{ url_for('main.contact_lenses') }}" class="sub-nav-lenses-highlight" style="color: #0096c7; font-weight: 800; border-right: 1.5px solid #e2e8f0; padding-right: 15px;"><i class="fas fa-eye"></i> Contact Lenses</a>
   <a href="{{ url_for('catalog.search', sort='newest') }}">New Arrivals</a>
   <a href="{{ url_for('catalog.category', slug='eyeglasses', gender='Men') }}">Men</a>
   <a href="{{ url_for('catalog.category', slug='eyeglasses', gender='Women') }}">Women</a>

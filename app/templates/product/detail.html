@@ -13,7 +13,11 @@
     <div class="pdp-gallery">
       <div class="pdp-main-img">
         {% if p.images %}
-          <img id="pdpMain" src="{{ url_for('static', filename='uploads/' ~ p.images[0].filename) }}" alt="{{ p.name }}">
+          {% if p.images[0].filename.startswith('http') %}
+            <img id="pdpMain" src="{{ p.images[0].filename }}" alt="{{ p.name }}">
+          {% else %}
+            <img id="pdpMain" src="{{ url_for('static', filename='uploads/' ~ p.images[0].filename) }}" alt="{{ p.name }}">
+          {%   endif %}
         {% else %}
           <div class="product-placeholder">{{ icon('wallet' if p.category and p.category.kind=='accessory' else 'glasses') }}</div>
         {% endif %}
@@ -22,7 +26,11 @@
       <div class="pdp-thumbs">
         {% for img in p.images %}
         <div class="pdp-thumb {{ 'active' if loop.first }}" onclick="document.getElementById('pdpMain').src=this.querySelector('img').src">
-          <img src="{{ url_for('static', filename='uploads/' ~ img.filename) }}" alt="">
+          {% if img.filename.startswith('http') %}
+            <img src="{{ img.filename }}" alt="">
+          {% else %}
+            <img src="{{ url_for('static', filename='uploads/' ~ img.filename) }}" alt="">
+          {% endif %}
         </div>
         {% endfor %}
       </div>

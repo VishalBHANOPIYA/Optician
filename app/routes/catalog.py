@@ -4,7 +4,7 @@ from app.forms.reserve import ReserveForm
 
 catalog_bp = Blueprint("catalog", __name__)
 
-SHAPES = ["Rectangle", "Round", "Cat-eye", "Aviator", "Square", "Wayfarer"]
+SHAPES = ["Rectangle", "Cateye", "Aviator", "Geometric", "Round", "Clubmaster", "Square"]
 GENDERS = ["Men", "Women", "Unisex", "Kids"]
 SIZES = ["Small", "Medium", "Large"]
 PRICE_RANGES = [
@@ -34,7 +34,10 @@ def _apply_filters(query):
     if gender:
         query = query.filter(Product.gender == gender)
     if shape:
-        query = query.filter(Product.frame_shape == shape)
+        if shape.lower() in ("cateye", "cat-eye"):
+            query = query.filter(Product.frame_shape.in_(["Cat-eye", "Cateye"]))
+        else:
+            query = query.filter(Product.frame_shape == shape)
     if size:
         query = query.filter(Product.frame_size == size)
     if material:

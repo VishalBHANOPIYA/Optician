@@ -1,15 +1,147 @@
 {% macro shape_svg(shape) %}
 {% if shape == 'Rectangle' %}
-<svg viewBox="0 0 100 40"><rect x="6" y="10" width="36" height="20" rx="4"/><rect x="58" y="10" width="36" height="20" rx="4"/><line x1="42" y1="18" x2="58" y2="18"/></svg>
-{% elif shape == 'Round' %}
-<svg viewBox="0 0 100 40"><circle cx="26" cy="20" r="15"/><circle cx="74" cy="20" r="15"/><line x1="41" y1="20" x2="59" y2="20"/></svg>
-{% elif shape == 'Cat-eye' %}
-<svg viewBox="0 0 100 40"><path d="M8 14 Q24 6 42 16 Q26 32 8 26 Z"/><path d="M92 14 Q76 6 58 16 Q74 32 92 26 Z"/><line x1="42" y1="18" x2="58" y2="18"/></svg>
+<svg viewBox="0 0 120 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Temples in background -->
+  <path d="M12 18 C0 18 -4 34 0 54" stroke="#444444" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+  <path d="M108 18 C120 18 124 34 120 54" stroke="#444444" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+  <!-- Left Rim -->
+  <rect x="9" y="8" width="45" height="34" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="5"/>
+  <!-- Right Rim -->
+  <rect x="66" y="8" width="45" height="34" rx="6" fill="#FFFFFF" stroke="#111111" stroke-width="5"/>
+  <!-- Bridge -->
+  <path d="M54 20 H66" stroke="#111111" stroke-width="5.5" stroke-linecap="round"/>
+  <!-- Endpieces -->
+  <path d="M5 8 H10 V18 H5 Z" fill="#111111"/>
+  <path d="M110 8 H115 V18 H110 Z" fill="#111111"/>
+  <!-- Glare reflections -->
+  <line x1="16" y1="14" x2="32" y2="30" stroke="#E2E8F0" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="73" y1="14" x2="89" y2="30" stroke="#E2E8F0" stroke-width="2.5" stroke-linecap="round"/>
+</svg>
+{% elif shape == 'Cateye' or shape == 'Cat-eye' %}
+<svg viewBox="0 0 120 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Temples in background -->
+  <path d="M10 14 C2 14 -2 28 0 54" stroke="#B8860B" stroke-width="2.2" fill="none"/>
+  <path d="M121 42 C122 46 121 50 120 54" stroke="#111111" stroke-width="3.5" fill="none"/>
+  <path d="M110 14 C118 14 122 28 120 54" stroke="#B8860B" stroke-width="2.2" fill="none"/>
+  <path d="M-1 42 C-2 46 -1 50 0 54" stroke="#111111" stroke-width="3.5" fill="none"/>
+  <!-- Left Rim sweep -->
+  <path d="M8 12 C14 4 36 8 48 18 C48 32 28 40 16 34 C8 28 5 18 8 12 Z" fill="#FFFFFF" stroke="#B8860B" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M8 12 C16 5 34 8 48 18" stroke="#111111" stroke-width="4.5" stroke-linecap="round" fill="none"/>
+  <!-- Right Rim sweep -->
+  <path d="M112 12 C106 4 84 8 72 18 C72 32 92 40 104 34 C112 28 115 18 112 12 Z" fill="#FFFFFF" stroke="#B8860B" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M112 12 C104 5 86 8 72 18" stroke="#111111" stroke-width="4.5" stroke-linecap="round" fill="none"/>
+  <!-- Bridge -->
+  <path d="M48 23 C54 20 66 20 72 23" stroke="#B8860B" stroke-width="3"/>
+  <!-- Glare reflections -->
+  <line x1="16" y1="16" x2="28" y2="28" stroke="#E2E8F0" stroke-width="2" stroke-linecap="round"/>
+  <line x1="92" y1="16" x2="104" y2="28" stroke="#E2E8F0" stroke-width="2" stroke-linecap="round"/>
+</svg>
 {% elif shape == 'Aviator' %}
-<svg viewBox="0 0 100 40"><path d="M8 12 H42 L36 32 Q24 36 14 30 Z"/><path d="M92 12 H58 L64 32 Q76 36 86 30 Z"/><line x1="42" y1="16" x2="58" y2="16"/></svg>
+<svg viewBox="0 0 120 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Temples in background -->
+  <path d="M12 14 C0 14 -4 28 0 54" stroke="#555555" stroke-width="2.2" fill="none"/>
+  <path d="M108 14 C120 14 124 28 120 54" stroke="#555555" stroke-width="2.2" fill="none"/>
+  <!-- Left Rim -->
+  <path d="M16 11 H48 C51 21 49 41 33 45 C17 45 13 29 16 11 Z" fill="#FFFFFF" stroke="#222222" stroke-width="3" stroke-linejoin="round"/>
+  <!-- Right Rim -->
+  <path d="M104 11 H72 C69 21 71 41 87 45 C103 45 107 29 104 11 Z" fill="#FFFFFF" stroke="#222222" stroke-width="3" stroke-linejoin="round"/>
+  <!-- Double Bridge -->
+  <line x1="48" y1="11" x2="72" y2="11" stroke="#222222" stroke-width="3.5" stroke-linecap="round"/>
+  <path d="M48 18 C54 15 66 15 72 18" stroke="#222222" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Endpieces -->
+  <path d="M10 12 H16" stroke="#222222" stroke-width="3"/>
+  <path d="M104 12 H110" stroke="#222222" stroke-width="3"/>
+  <!-- Glare reflections -->
+  <line x1="22" y1="18" x2="32" y2="30" stroke="#E2E8F0" stroke-width="2" stroke-linecap="round"/>
+  <line x1="88" y1="18" x2="98" y2="30" stroke="#E2E8F0" stroke-width="2" stroke-linecap="round"/>
+</svg>
+{% elif shape == 'Geometric' %}
+<svg viewBox="0 0 120 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Temples in background -->
+  <path d="M10 22 C0 22 -4 34 0 54" stroke="#555555" stroke-width="2" fill="none"/>
+  <path d="M110 22 C120 22 124 34 120 54" stroke="#555555" stroke-width="2" fill="none"/>
+  <!-- Left Hex Rim -->
+  <polygon points="12 20, 29 10, 48 20, 48 38, 29 47, 12 38" fill="#FFFFFF" stroke="#111111" stroke-width="3" stroke-linejoin="round"/>
+  <!-- Right Hex Rim -->
+  <polygon points="108 20, 91 10, 72 20, 72 38, 91 47, 108 38" fill="#FFFFFF" stroke="#111111" stroke-width="3" stroke-linejoin="round"/>
+  <!-- Bridge -->
+  <path d="M48 25 C54 22 66 22 72 25" stroke="#111111" stroke-width="3" stroke-linecap="round"/>
+  <!-- Glare reflections -->
+  <line x1="18" y1="22" x2="30" y2="34" stroke="#E2E8F0" stroke-width="2" stroke-linecap="round"/>
+  <line x1="90" y1="22" x2="102" y2="34" stroke="#E2E8F0" stroke-width="2" stroke-linecap="round"/>
+</svg>
+{% elif shape == 'Round' %}
+<svg viewBox="0 0 120 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Temples in background -->
+  <path d="M11 25 C0 25 -4 36 0 54" stroke="#555555" stroke-width="2.2" fill="none"/>
+  <path d="M109 25 C120 25 124 36 120 54" stroke="#555555" stroke-width="2.2" fill="none"/>
+  <!-- Left Rim -->
+  <circle cx="30" cy="27" r="19" fill="#FFFFFF" stroke="#111111" stroke-width="3"/>
+  <!-- Right Rim -->
+  <circle cx="90" cy="27" r="19" fill="#FFFFFF" stroke="#111111" stroke-width="3"/>
+  <!-- Bridge -->
+  <path d="M49 25 C54 21 66 21 71 25" stroke="#111111" stroke-width="3" stroke-linecap="round"/>
+  <!-- Glare reflections -->
+  <line x1="20" y1="18" x2="32" y2="30" stroke="#E2E8F0" stroke-width="2.2" stroke-linecap="round"/>
+  <line x1="80" y1="18" x2="92" y2="30" stroke="#E2E8F0" stroke-width="2.2" stroke-linecap="round"/>
+</svg>
+{% elif shape == 'Clubmaster' %}
+<svg viewBox="0 0 120 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Temples in background -->
+  <path d="M10 15 C0 15 -4 28 0 54" stroke="#111111" stroke-width="3.5" fill="none"/>
+  <path d="M110 15 C120 15 124 28 120 54" stroke="#111111" stroke-width="3.5" fill="none"/>
+  <!-- Lower silver rim -->
+  <path d="M10 18 C10 32, 30 40, 48 24" fill="#FFFFFF" stroke="#888888" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M110 18 C110 32, 90 40, 72 24" fill="#FFFFFF" stroke="#888888" stroke-width="3" stroke-linejoin="round"/>
+  <!-- Top black acetate browline -->
+  <path d="M8 12 C14 10, 36 10, 48 15 L48 23 C 36 19, 14 19, 8 19 Z" fill="#111111" stroke="#111111" stroke-width="0.5"/>
+  <path d="M112 12 C106 10, 84 10, 72 15 L72 23 C 84 19, 106 19, 112 19 Z" fill="#111111" stroke="#111111" stroke-width="0.5"/>
+  <!-- Bridge -->
+  <path d="M48 21 C54 18 66 18 72 21" stroke="#888888" stroke-width="3" stroke-linecap="round"/>
+  <!-- Hinge studs -->
+  <circle cx="13" cy="15" r="1.2" fill="#E2E8F0"/>
+  <circle cx="107" cy="15" r="1.2" fill="#E2E8F0"/>
+  <!-- Glare reflections -->
+  <line x1="18" y1="23" x2="30" y2="35" stroke="#E2E8F0" stroke-width="2" stroke-linecap="round"/>
+  <line x1="90" y1="23" x2="102" y2="35" stroke="#E2E8F0" stroke-width="2" stroke-linecap="round"/>
+</svg>
 {% elif shape == 'Square' %}
-<svg viewBox="0 0 100 40"><rect x="6" y="8" width="34" height="24" rx="3"/><rect x="60" y="8" width="34" height="24" rx="3"/><line x1="40" y1="18" x2="60" y2="18"/></svg>
+<svg viewBox="0 0 120 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="squareGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#111111" />
+      <stop offset="45%" stop-color="#111111" />
+      <stop offset="70%" stop-color="#CD7F32" />
+      <stop offset="100%" stop-color="#A0522D" />
+    </linearGradient>
+  </defs>
+  <!-- Temples in background -->
+  <path d="M11 17 C0 17 -4 29 0 54" stroke="url(#squareGrad)" stroke-width="3.5" fill="none"/>
+  <path d="M109 17 C120 17 124 29 120 54" stroke="url(#squareGrad)" stroke-width="3.5" fill="none"/>
+  <!-- Left Rim -->
+  <rect x="11" y="9" width="41" height="33" rx="6" fill="#FFFFFF" stroke="url(#squareGrad)" stroke-width="5"/>
+  <!-- Right Rim -->
+  <rect x="68" y="9" width="41" height="33" rx="6" fill="#FFFFFF" stroke="url(#squareGrad)" stroke-width="5"/>
+  <!-- Bridge -->
+  <path d="M48 18 C54 14 66 14 72 18" stroke="#111111" stroke-width="5.5" stroke-linecap="round"/>
+  <!-- Glare reflections -->
+  <line x1="18" y1="14" x2="32" y2="28" stroke="#E2E8F0" stroke-width="2.2" stroke-linecap="round"/>
+  <line x1="75" y1="14" x2="89" y2="28" stroke="#E2E8F0" stroke-width="2.2" stroke-linecap="round"/>
+</svg>
 {% elif shape == 'Wayfarer' %}
-<svg viewBox="0 0 100 40"><path d="M6 12 H44 L40 30 H10 Z"/><path d="M94 12 H56 L60 30 H90 Z"/><line x1="44" y1="16" x2="56" y2="16"/></svg>
+<svg viewBox="0 0 120 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Temples in background -->
+  <path d="M11 14 C0 14 -4 28 0 54" stroke="#111111" stroke-width="3.5" fill="none"/>
+  <path d="M109 14 C120 14 124 28 120 54" stroke="#111111" stroke-width="3.5" fill="none"/>
+  <!-- Left Rim -->
+  <path d="M14 9 H48 L44 34 C44 38, 35 40, 22 38 C17 37, 14 32, 14 9 Z" fill="#FFFFFF" stroke="#111111" stroke-width="4.5"/>
+  <!-- Right Rim -->
+  <path d="M106 9 H72 L76 34 C76 38, 85 40, 98 38 C103 37, 106 32, 106 9 Z" fill="#FFFFFF" stroke="#111111" stroke-width="4.5"/>
+  <!-- Bridge -->
+  <path d="M48 13 C54 10 66 10 72 13" stroke="#111111" stroke-width="5.5" stroke-linecap="round"/>
+  <!-- Glare reflections -->
+  <line x1="20" y1="14" x2="32" y2="26" stroke="#E2E8F0" stroke-width="2" stroke-linecap="round"/>
+  <line x1="88" y1="14" x2="100" y2="26" stroke="#E2E8F0" stroke-width="2" stroke-linecap="round"/>
+</svg>
 {% endif %}
 {% endmacro %}

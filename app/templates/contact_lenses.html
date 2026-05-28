@@ -1,0 +1,971 @@
+{% extends "base.html" %}
+{% from "partials/icons.html" import icon %}
+
+{% block title %}Aqualens Portal · Contact Lenses & Solutions | Ayan Optics Indore{% endblock %}
+
+{% block head %}
+<style>
+  /* Aqualens environment variables & reset */
+  :root {
+    --aq-primary: #002244;
+    --aq-secondary: #0096c7;
+    --aq-accent: #00b4d8;
+    --aq-bg-light: #f0f8ff;
+    --aq-text-dark: #0f172a;
+    --aq-coral: #ea580c;
+  }
+
+  body {
+    background-color: #ffffff;
+    color: var(--aq-text-dark);
+  }
+
+  /* Announcements */
+  .aq-announce-bar {
+    background: linear-gradient(90deg, #001220 0%, #002244 100%);
+    color: #fff;
+    font-size: 13px;
+    text-align: center;
+    padding: 8px 16px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+  }
+
+  /* Custom Navbar overrides */
+  .aq-navbar {
+    background: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+  }
+  .aq-nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 24px;
+  }
+  .aq-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+  }
+  .aq-logo-icon {
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, #0096c7 0%, #ffb703 100%);
+    border-radius: 50% 50% 0 50%;
+    transform: rotate(45deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .aq-logo-icon::after {
+    content: '';
+    width: 12px;
+    height: 12px;
+    background: #fff;
+    border-radius: 50%;
+  }
+  .aq-logo-text {
+    font-size: 26px;
+    font-weight: 900;
+    color: var(--aq-primary);
+    letter-spacing: -0.03em;
+  }
+  .aq-logo-text span {
+    color: var(--aq-secondary);
+  }
+
+  .aq-nav-links {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .aq-nav-links a {
+    color: #334155;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    transition: 0.2s;
+    letter-spacing: 0.02em;
+  }
+  .aq-nav-links a:hover {
+    color: var(--aq-secondary);
+  }
+  .aq-nav-links a.active {
+    color: var(--aq-secondary);
+    border-bottom: 2px solid var(--aq-secondary);
+    padding-bottom: 4px;
+  }
+
+  .aq-nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .btn-back-eyewear {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #fff8f5;
+    color: var(--aq-coral);
+    border: 1px solid rgba(234, 88, 12, 0.2);
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 13px;
+    text-decoration: none;
+    transition: 0.2s;
+  }
+  .btn-back-eyewear:hover {
+    background: var(--aq-coral);
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(234, 88, 12, 0.15);
+  }
+
+  /* Sub Header sub-navigation for Aqualens */
+  .aq-sub-nav {
+    background: #f8fafc;
+    border-bottom: 1px solid #f1f5f9;
+    padding: 8px 0;
+  }
+  .aq-sub-nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    padding: 0 24px;
+  }
+  .aq-sub-nav-inner a {
+    font-size: 13px;
+    color: #475569;
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.2s;
+  }
+  .aq-sub-nav-inner a:hover {
+    color: var(--aq-secondary);
+  }
+
+  /* Payday Sale Hero Banner */
+  .aq-hero-section {
+    max-width: 1200px;
+    margin: 24px auto;
+    padding: 0 24px;
+  }
+  .aq-hero-banner {
+    background: linear-gradient(135deg, #cbe6ff 0%, #e8f4ff 100%);
+    border-radius: 24px;
+    display: flex;
+    min-height: 380px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 150, 199, 0.08);
+    border: 1px solid rgba(0, 150, 199, 0.1);
+  }
+  .aq-hero-left {
+    width: 50%;
+    padding: 48px 56px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    z-index: 5;
+  }
+  .aq-sale-badge {
+    align-self: flex-start;
+    background: var(--aq-primary);
+    color: #ffb703;
+    font-weight: 900;
+    font-size: 42px;
+    line-height: 1;
+    padding: 6px 16px;
+    border-radius: 8px;
+    transform: rotate(-2deg);
+    margin-bottom: 12px;
+    letter-spacing: 0.05em;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+  }
+  .aq-sale-title {
+    font-size: 54px;
+    font-weight: 900;
+    color: var(--aq-secondary);
+    line-height: 1.1;
+    margin-bottom: 8px;
+  }
+  .aq-sale-subtitle {
+    font-size: 20px;
+    color: var(--aq-primary);
+    font-weight: 700;
+    margin-bottom: 24px;
+  }
+  .btn-aq-shop {
+    align-self: flex-start;
+    background: var(--aq-primary);
+    color: #fff;
+    padding: 14px 36px;
+    border-radius: 30px;
+    font-weight: 800;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    transition: 0.2s;
+    box-shadow: 0 6px 15px rgba(0, 34, 68, 0.25);
+  }
+  .btn-aq-shop:hover {
+    background: var(--aq-secondary);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 150, 199, 0.3);
+  }
+
+  .aq-hero-right {
+    width: 50%;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 20px;
+  }
+
+  /* 3D Box Mockups & Pedestals */
+  .aq-pedestals {
+    display: flex;
+    gap: 20px;
+    align-items: flex-end;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  .pedestal-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+  .pedestal-cylinder {
+    width: 110px;
+    height: 35px;
+    background: linear-gradient(180deg, #ffffff 0%, #e2e8f0 100%);
+    border-radius: 50%;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.06);
+    border: 1px solid #cbd5e1;
+    position: relative;
+    z-index: 1;
+  }
+  .pedestal-box {
+    width: 80px;
+    height: 110px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #0096c7 0%, #00b4d8 100%);
+    color: #fff;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: 9px;
+    font-weight: 800;
+    box-shadow: 0 12px 24px rgba(0, 150, 199, 0.25);
+    transform: translateY(12px) rotate(-8deg);
+    z-index: 2;
+    border: 1px solid rgba(255,255,255,0.2);
+    position: relative;
+  }
+  .pedestal-box.box-color {
+    background: linear-gradient(135deg, #ff007f 0%, #7b2cbf 100%);
+    transform: translateY(18px) rotate(6deg);
+    box-shadow: 0 12px 24px rgba(255, 0, 127, 0.2);
+  }
+  .pedestal-box.box-solution {
+    background: #ffffff;
+    color: #0f172a;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    width: 70px;
+    height: 120px;
+    transform: translateY(8px) rotate(-3deg);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+  }
+
+  /* Grid of categories: "Contact lenses for you" */
+  .aq-grid-title {
+    text-align: center;
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--aq-primary);
+    margin: 48px 0 32px;
+    letter-spacing: -0.01em;
+  }
+  .aq-category-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto 56px;
+    padding: 0 24px;
+  }
+  .aq-cat-card {
+    background: transparent;
+    text-align: center;
+    text-decoration: none;
+    transition: 0.25s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px;
+  }
+  .aq-cat-card:hover {
+    transform: translateY(-4px);
+  }
+  .aq-cat-image-wrapper {
+    width: 140px;
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .aq-cat-card:hover .aq-cat-image-wrapper {
+    transform: scale(1.08);
+  }
+  .aq-cat-img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+  .aq-cat-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--aq-primary);
+    margin-top: 8px;
+    letter-spacing: -0.01em;
+  }
+
+  /* Colors Section */
+  .colors-row {
+    background-color: #f8fafc;
+    padding: 56px 0;
+  }
+  .colors-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+  .color-card {
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    aspect-ratio: 1;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+    text-decoration: none;
+    display: flex;
+    align-items: flex-end;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .color-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    inset: 0;
+    transition: transform 0.5s;
+  }
+  .color-card:hover img {
+    transform: scale(1.06);
+  }
+  .color-overlay {
+    position: relative;
+    z-index: 2;
+    background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.7) 100%);
+    width: 100%;
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  .color-card-title {
+    color: #fff;
+    font-size: 24px;
+    font-weight: 900;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin: 0;
+  }
+  .color-selectors {
+    display: flex;
+    gap: 6px;
+    margin-top: 8px;
+  }
+  .color-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 1.5px solid #fff;
+  }
+
+  /* Usage Grid */
+  .usage-section {
+    padding: 56px 0;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .usage-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+    padding: 0 24px;
+  }
+  .usage-card {
+    border-radius: 24px;
+    background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+    padding: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-decoration: none;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.03);
+    transition: 0.25s;
+    border: 1px solid rgba(0,0,0,0.04);
+  }
+  .usage-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+  }
+  .usage-badge {
+    align-self: flex-start;
+    background: #e0f2fe;
+    color: #0369a1;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 12px;
+    margin-bottom: 8px;
+    display: inline-block;
+  }
+  .usage-badge.badge-yellow {
+    background: #fef3c7;
+    color: #b45309;
+  }
+  .usage-card h3 {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--aq-primary);
+    margin: 4px 0 8px;
+  }
+  .usage-card p {
+    color: #475569;
+    font-size: 14px;
+    margin: 0;
+  }
+
+  /* Power Type Grid */
+  .power-section {
+    background-color: #ffffff;
+    padding: 56px 0;
+  }
+  .power-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+  .power-card {
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    aspect-ratio: 0.8;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+    text-decoration: none;
+    display: flex;
+    align-items: flex-end;
+  }
+  .power-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    inset: 0;
+    transition: transform 0.5s;
+  }
+  .power-card:hover img {
+    transform: scale(1.05);
+  }
+  .power-overlay {
+    position: relative;
+    z-index: 2;
+    background: linear-gradient(180deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.75) 100%);
+    width: 100%;
+    padding: 24px;
+  }
+  .power-badge {
+    background: #10b981;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 8px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    display: inline-block;
+  }
+  .power-card-title {
+    color: #fff;
+    font-size: 26px;
+    font-weight: 800;
+    margin: 0;
+  }
+
+  /* Why wear Aqualens Grid */
+  .why-section {
+    background-color: #e0f2fe;
+    padding: 64px 0;
+  }
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+  .why-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 32px 24px;
+    text-align: center;
+    box-shadow: 0 6px 20px rgba(0, 150, 199, 0.05);
+  }
+  .why-icon {
+    font-size: 32px;
+    color: var(--aq-secondary);
+    margin-bottom: 16px;
+  }
+  .why-card h4 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--aq-primary);
+    margin-bottom: 8px;
+  }
+  .why-card p {
+    font-size: 13px;
+    color: #64748b;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* Custom Aqualens Footer styling */
+  .aq-footer {
+    background-color: #08111e;
+    color: #94a3b8;
+    padding: 64px 0 24px;
+  }
+  .aq-footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1.5fr;
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px 40px;
+    border-bottom: 1px solid #1e293b;
+  }
+  .aq-footer h4 {
+    color: #f8fafc;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+  .aq-footer a {
+    color: #94a3b8;
+    text-decoration: none;
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    transition: 0.2s;
+  }
+  .aq-footer a:hover {
+    color: #fff;
+  }
+
+  @media(max-width: 900px) {
+    .aq-nav-links { display: none; }
+    .aq-category-grid { grid-template-columns: repeat(2, 1fr); }
+    .colors-grid { grid-template-columns: repeat(2, 1fr); }
+    .usage-grid { grid-template-columns: 1fr; }
+    .power-grid { grid-template-columns: 1fr; }
+    .why-grid { grid-template-columns: repeat(2, 1fr); }
+    .aq-footer-grid { grid-template-columns: 1fr; }
+    .aq-hero-banner { flex-direction: column; min-height: auto; }
+    .aq-hero-left { width: 100%; padding: 32px 24px; }
+    .aq-hero-right { width: 100%; height: 260px; }
+  }
+</style>
+{% endblock %}
+
+{% block navbar %}
+<!-- Announce bar -->
+<div class="aq-announce-bar">PAYDAY SALE ACTIVE · Flat 15% Off On Aqualens Products · Fast Home Delivery</div>
+
+<!-- Navy/Teal Aqualens Navbar -->
+<nav class="aq-navbar">
+  <div class="aq-nav-inner">
+    <a href="{{ url_for('main.contact_lenses') }}" class="aq-logo">
+      <div class="aq-logo-icon"></div>
+      <div class="aq-logo-text">aqua<span>lens</span></div>
+    </a>
+    
+    <ul class="aq-nav-links">
+      <li><a href="{{ url_for('catalog.category', slug='clear-lenses') }}">Clear Lenses</a></li>
+      <li><a href="{{ url_for('catalog.category', slug='color-lenses') }}">Color Lenses</a></li>
+      <li><a href="{{ url_for('catalog.category', slug='toric-lenses') }}">Toric Lenses</a></li>
+      <li><a href="{{ url_for('catalog.category', slug='solutions') }}">Solutions</a></li>
+      <li><a href="{{ url_for('catalog.category', slug='lens-accessories') }}">Accessories</a></li>
+    </ul>
+
+    <div class="aq-nav-actions">
+      <!-- Environment Switcher -->
+      <a href="{{ url_for('main.home') }}" class="btn-back-eyewear">
+        <i class="fas fa-glasses"></i> Eyewear Store
+      </a>
+      {% if is_user %}
+        <a href="{{ url_for('account.wishlist') }}" class="nav-icon-btn" title="Wishlist">{{ icon('heart') }}</a>
+      {% else %}
+        <button class="nav-icon-btn" onclick="openSignin()">{{ icon('heart') }}</button>
+        <button class="nav-cta" onclick="openSignin()" style="background:var(--aq-primary)">Sign In</button>
+      {% endif %}
+    </div>
+  </div>
+</nav>
+
+<!-- Sub navigation for filter types -->
+<div class="aq-sub-nav">
+  <div class="aq-sub-nav-inner">
+    <a href="{{ url_for('catalog.category', slug='clear-lenses') }}">Daily Clear</a>
+    <a href="{{ url_for('catalog.category', slug='clear-lenses') }}">Monthly Clear</a>
+    <a href="{{ url_for('catalog.category', slug='color-lenses') }}">Brown Lenses</a>
+    <a href="{{ url_for('catalog.category', slug='color-lenses') }}">Grey Lenses</a>
+    <a href="{{ url_for('catalog.category', slug='solutions') }}">Solutions &amp; Care</a>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section / Payday Sale Banner -->
+<section class="aq-hero-section">
+  <div class="aq-hero-banner">
+    <div class="aq-hero-left">
+      <div class="aq-sale-badge" style="background:#0096c7; color:#fff;">AQUALENS COMFORT</div>
+      <h1 class="aq-sale-title" style="font-size: 46px; color: var(--aq-primary);">HYDRATE YOUR EYES</h1>
+      <p class="aq-sale-subtitle" style="font-size: 18px; margin-bottom: 24px;">Experience 24H moisture shield & UV protection lenses</p>
+      <a href="{{ url_for('catalog.category', slug='clear-lenses') }}" class="btn-aq-shop">Shop Now</a>
+    </div>
+    
+    <div class="aq-hero-right">
+      <div class="aq-pedestals">
+        <!-- Pedestal 1: Aqualens Box -->
+        <div class="pedestal-item">
+          <div class="pedestal-box">
+            <span style="font-size: 7px; color: #ffb703;">AQUALENS</span>
+            <div style="font-size: 14px; font-weight:900;">24H</div>
+            <div style="font-size: 7px; opacity:0.8;">DAILY DISPOSABLE</div>
+            <div style="font-size: 8px; margin-top: auto; border-top: 1px solid rgba(255,255,255,0.2); padding-top:4px;">CLEAR LENSES</div>
+          </div>
+          <div class="pedestal-cylinder"></div>
+        </div>
+        
+        <!-- Pedestal 2: Aquacolor Box -->
+        <div class="pedestal-item">
+          <div class="pedestal-box box-color">
+            <span style="font-size: 7px; color: #ffeb3b;">AQUACOLOR</span>
+            <div style="font-size: 14px; font-weight:900;">COLOR</div>
+            <div style="font-size: 7px; opacity:0.8;">SLIP ON. FASHION ON.</div>
+            <div style="font-size: 8px; margin-top: auto; border-top: 1px solid rgba(255,255,255,0.2); padding-top:4px;">DUSKY BROWN</div>
+          </div>
+          <div class="pedestal-cylinder"></div>
+        </div>
+
+        <!-- Pedestal 3: Comfort Solution Bottle -->
+        <div class="pedestal-item">
+          <div class="pedestal-box box-solution">
+            <div style="width:100%; height:12px; background:#0096c7; border-radius:4px 4px 0 0;"></div>
+            <span style="font-size: 7px; color: #0096c7; text-align:center;">aqualens</span>
+            <div style="font-size: 8px; font-weight:700; text-align:center; color:#64748b;">Comfort<br>Solution</div>
+            <div style="font-size: 7px; color:#94a3b8; text-align:center; margin-top:auto;">360 ml</div>
+          </div>
+          <div class="pedestal-cylinder"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Category Grid: "Contact lenses for you" -->
+<section class="container">
+  <h2 class="aq-grid-title">Contact lenses for you</h2>
+  <div class="aq-category-grid">
+    <!-- Category 1: Clear Lenses -->
+    <a href="{{ url_for('catalog.category', slug='clear-lenses') }}" class="aq-cat-card">
+      <div class="aq-cat-image-wrapper">
+        <img src="{{ url_for('static', filename='images/lens_categories/clear.png') }}" alt="Clear Lenses" class="aq-cat-img" />
+      </div>
+      <span class="aq-cat-name">Clear Lenses</span>
+    </a>
+
+    <!-- Category 2: Color Lenses -->
+    <a href="{{ url_for('catalog.category', slug='color-lenses') }}" class="aq-cat-card">
+      <div class="aq-cat-image-wrapper">
+        <img src="{{ url_for('static', filename='images/lens_categories/color.png') }}" alt="Color Lenses" class="aq-cat-img" />
+      </div>
+      <span class="aq-cat-name">Color Lenses</span>
+    </a>
+
+    <!-- Category 3: Toric Lenses -->
+    <a href="{{ url_for('catalog.category', slug='toric-lenses') }}" class="aq-cat-card">
+      <div class="aq-cat-image-wrapper">
+        <img src="{{ url_for('static', filename='images/lens_categories/toric.png') }}" alt="Toric Lenses" class="aq-cat-img" />
+      </div>
+      <span class="aq-cat-name">Toric Lenses</span>
+    </a>
+
+    <!-- Category 4: Solution -->
+    <a href="{{ url_for('catalog.category', slug='solutions') }}" class="aq-cat-card">
+      <div class="aq-cat-image-wrapper">
+        <img src="{{ url_for('static', filename='images/lens_categories/solution.png') }}" alt="Solution" class="aq-cat-img" style="max-height: 90%;" />
+      </div>
+      <span class="aq-cat-name">Solution</span>
+    </a>
+
+    <!-- Category 5: Accessories -->
+    <a href="{{ url_for('catalog.category', slug='lens-accessories') }}" class="aq-cat-card">
+      <div class="aq-cat-image-wrapper">
+        <img src="{{ url_for('static', filename='images/lens_categories/accessories.png') }}" alt="Accessories" class="aq-cat-img" />
+      </div>
+      <span class="aq-cat-name">Accessories</span>
+    </a>
+  </div>
+</section>
+
+<!-- Shop By Colours Section -->
+<section class="colors-row">
+  <div class="container">
+    <h2 class="aq-grid-title" style="margin-top:0;">Shop By Colours</h2>
+    <div class="colors-grid">
+      <!-- BROWN -->
+      <a href="{{ url_for('catalog.category', slug='color-lenses') }}" class="color-card">
+        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=600&q=80" alt="Brown Contact Lenses">
+        <div class="color-overlay">
+          <h3 class="color-card-title">BROWN</h3>
+          <div class="color-selectors">
+            <span class="color-dot" style="background:#8b5a2b;"></span>
+            <span class="color-dot" style="background:#cd853f;"></span>
+            <span class="color-dot" style="background:#d2b48c;"></span>
+          </div>
+        </div>
+      </a>
+
+      <!-- GREY -->
+      <a href="{{ url_for('catalog.category', slug='color-lenses') }}" class="color-card">
+        <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=600&q=80" alt="Grey Contact Lenses">
+        <div class="color-overlay">
+          <h3 class="color-card-title">GREY</h3>
+          <div class="color-selectors">
+            <span class="color-dot" style="background:#708090;"></span>
+            <span class="color-dot" style="background:#a9a9a9;"></span>
+            <span class="color-dot" style="background:#e6e6e6;"></span>
+          </div>
+        </div>
+      </a>
+
+      <!-- GREEN -->
+      <a href="{{ url_for('catalog.category', slug='color-lenses') }}" class="color-card">
+        <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=600&q=80" alt="Green Contact Lenses">
+        <div class="color-overlay">
+          <h3 class="color-card-title">GREEN</h3>
+          <div class="color-selectors">
+            <span class="color-dot" style="background:#2e8b57;"></span>
+            <span class="color-dot" style="background:#3cb371;"></span>
+            <span class="color-dot" style="background:#98fb98;"></span>
+          </div>
+        </div>
+      </a>
+
+      <!-- BLUE -->
+      <a href="{{ url_for('catalog.category', slug='color-lenses') }}" class="color-card">
+        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80" alt="Blue Contact Lenses">
+        <div class="color-overlay">
+          <h3 class="color-card-title">BLUE</h3>
+          <div class="color-selectors">
+            <span class="color-dot" style="background:#4682b4;"></span>
+            <span class="color-dot" style="background:#00bfff;"></span>
+            <span class="color-dot" style="background:#b0e0e6;"></span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Shop By Usage Section -->
+<section class="usage-section">
+  <h2 class="aq-grid-title" style="margin-top:0;">Shop by usage</h2>
+  <div class="usage-grid">
+    <!-- Daily -->
+    <a href="{{ url_for('catalog.category', slug='clear-lenses') }}" class="usage-card">
+      <div>
+        <span class="usage-badge">Single Day Use · 10-12 hours</span>
+        <h3>Daily</h3>
+        <p>Fresh lens every day. No cleaning required.</p>
+      </div>
+      <!-- Miniature SVG package -->
+      <svg class="svg-lens-pack" viewBox="0 0 100 80" style="width:110px;">
+        <rect x="10" y="20" width="80" height="50" rx="6" fill="#0096c7" />
+        <path d="M10,40 Q50,60 90,40" fill="none" stroke="#fff" stroke-width="4" />
+        <text x="50" y="58" fill="#fff" font-size="8" font-weight="900" text-anchor="middle">Daily Pack</text>
+      </svg>
+    </a>
+
+    <!-- Monthly -->
+    <a href="{{ url_for('catalog.category', slug='clear-lenses') }}" class="usage-card">
+      <div>
+        <span class="usage-badge badge-yellow">Reusable Upto 30 Days · 10-12 hours</span>
+        <h3>Monthly</h3>
+        <p>Economical and reusable lenses for 30 days.</p>
+      </div>
+      <!-- Miniature monthly pack -->
+      <svg class="svg-lens-pack" viewBox="0 0 100 80" style="width:110px;">
+        <rect x="10" y="20" width="80" height="50" rx="6" fill="#ea580c" />
+        <path d="M10,25 Q50,45 90,25" fill="none" stroke="#ffb703" stroke-width="4" />
+        <text x="50" y="58" fill="#fff" font-size="8" font-weight="900" text-anchor="middle">Monthly Pack</text>
+      </svg>
+    </a>
+  </div>
+</section>
+
+<!-- Shop By Power Type Section -->
+<section class="power-section">
+  <div class="container">
+    <h2 class="aq-grid-title" style="margin-top:0;">Shop by power type</h2>
+    <div class="power-grid">
+      <!-- Toric -->
+      <a href="{{ url_for('catalog.category', slug='toric-lenses') }}" class="power-card">
+        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=600&q=80" alt="Toric Lenses">
+        <div class="power-overlay">
+          <span class="power-badge">For Cylindrical Powers</span>
+          <h3 class="power-card-title">Toric</h3>
+        </div>
+      </a>
+
+      <!-- Spherical -->
+      <a href="{{ url_for('catalog.category', slug='clear-lenses') }}" class="power-card">
+        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80" alt="Spherical Lenses">
+        <div class="power-overlay">
+          <span class="power-badge">Single Vision Lenses</span>
+          <h3 class="power-card-title">Spherical</h3>
+        </div>
+      </a>
+
+      <!-- Multifocal -->
+      <a href="{{ url_for('catalog.category', slug='clear-lenses') }}" class="power-card">
+        <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=600&q=80" alt="Multifocal Lenses">
+        <div class="power-overlay">
+          <span class="power-badge">Combined Near &amp; Far Vision</span>
+          <h3 class="power-card-title">Multifocal</h3>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Why wear Aqualens? -->
+<section class="why-section">
+  <div class="container">
+    <h2 class="aq-grid-title" style="margin-top:0; color:var(--aq-primary)">Why wear Aqualens?</h2>
+    <div class="why-grid">
+      <!-- Card 1: US FDA Approved -->
+      <div class="why-card">
+        <div class="why-icon"><i class="fas fa-award"></i></div>
+        <h4>US FDA Approved</h4>
+        <p>Quality contact lenses to take care of your style statement as well as your eye health.</p>
+      </div>
+
+      <!-- Card 2: UV Protection -->
+      <div class="why-card">
+        <div class="why-icon"><i class="fas fa-shield-halved"></i></div>
+        <h4>UV Protection</h4>
+        <p>In-built UV blockers for protection against harmful sun rays &amp; prolonged gadget use.</p>
+      </div>
+
+      <!-- Card 3: High Water Content -->
+      <div class="why-card">
+        <div class="why-icon"><i class="fas fa-droplet"></i></div>
+        <h4>High Water Content</h4>
+        <p>With high water content, Aqualens keeps your eyes hydrated &amp; moist for long hours.</p>
+      </div>
+
+      <!-- Card 4: Affordable & easy -->
+      <div class="why-card">
+        <div class="why-icon"><i class="fas fa-hand-holding-dollar"></i></div>
+        <h4>Affordable &amp; easy</h4>
+        <p>Aqualens is designed to suit your needs, preferences, and pocket-friendly budget.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Lenses Catalog Grid -->
+{% if featured_lenses %}
+<section class="container section">
+  <h2 class="section-title">Aqualens Bestsellers</h2>
+  <div class="product-grid">
+    {% for p in featured_lenses %}
+      {% include "partials/product_card.html" %}
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+{% endblock %}
+
+{% block footer %}
+<!-- Aqualens Custom Footer -->
+<footer class="aq-footer">
+  <div class="aq-footer-grid">
+    <div>
+      <h4 style="color:#00b4d8; font-size:20px; font-weight:900;">aqualens</h4>
+      <p style="font-size:13px; line-height:1.6; margin-top:8px;">Indore's premium contact lens portal powered by Ayan Optics. FDA-approved quality, comfort-shield technologies, and fast local pickups.</p>
+    </div>
+    <div>
+      <h4>Shop Portal</h4>
+      <a href="{{ url_for('catalog.category', slug='clear-lenses') }}">Clear Lenses</a>
+      <a href="{{ url_for('catalog.category', slug='color-lenses') }}">Color Lenses</a>
+      <a href="{{ url_for('catalog.category', slug='toric-lenses') }}">Toric Lenses</a>
+    </div>
+    <div>
+      <h4>Care &amp; Solutions</h4>
+      <a href="{{ url_for('catalog.category', slug='solutions') }}">Lens Solutions</a>
+      <a href="{{ url_for('catalog.category', slug='lens-accessories') }}">Cases &amp; Kits</a>
+      <a href="{{ url_for('main.home') }}">Back to Eyeglasses</a>
+    </div>
+    <div>
+      <h4>Visit Partner Store</h4>
+      <p style="font-size:13px; line-height:1.5; margin:0 0 10px 0;">Ayan Optics, Sukhdev Nagar, Indore</p>
+      <p style="font-size:13px; margin:0;">📞 +91 98262 18888</p>
+    </div>
+  </div>
+  <div style="text-align:center; padding-top:24px; font-size:12px; color:#475569;">
+    © 2026 Aqualens. Developed in partnership with Ayan Optics.
+  </div>
+</footer>
+{% endblock %}

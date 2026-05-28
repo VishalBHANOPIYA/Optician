@@ -6,7 +6,16 @@
 <!-- HERO CAROUSEL -->
 <section class="home-hero" id="homeHero" style="padding:0">
   <div class="hero-slides">
+    
+    <!-- Slide 1: Eyeglasses -->
     <div class="hero-slide s1 on">
+      <!-- Satin folds background vector -->
+      <svg class="bg-satin-folds" viewBox="0 0 1440 520" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M950 0 C1080 180, 920 320, 1120 520 L1440 520 L1440 0 Z" fill="rgba(255,255,255,0.02)" />
+        <path d="M800 0 C930 180, 830 320, 1000 520 L1440 520 L1440 0 Z" fill="rgba(0,0,0,0.12)" />
+        <path d="M1150 0 C1250 250, 1050 380, 1300 520 L1440 520 L1440 0 Z" fill="rgba(255,255,255,0.03)" />
+      </svg>
+      
       <div class="hero-content">
         <span class="eyebrow2">Indore's Favourite Optician</span>
         <h1>See the world in <em>style</em>, for less.</h1>
@@ -16,7 +25,44 @@
           <a href="{{ url_for('catalog.category', slug='sunglasses') }}" class="btn-hero-secondary">Shop Sunglasses</a>
         </div>
       </div>
+      
+      <!-- Right-side Luxury Glasses Graphic -->
+      <div class="hero-graphic s1-graphic">
+        <div class="sparkle sp1">✦</div>
+        <div class="sparkle sp2">✦</div>
+        <div class="sparkle sp3">✦</div>
+        <svg viewBox="0 0 320 180" class="luxury-glasses" xmlns="http://www.w3.org/2000/svg">
+          <filter id="glassesShadow" x="-20%" y="-20%" width="140%" height="140%">
+            <feDropShadow dx="0" dy="18" stdDeviation="14" flood-color="#000000" flood-opacity="0.65"/>
+          </filter>
+          <g filter="url(#glassesShadow)" transform="rotate(-10, 160, 90)">
+            <!-- Left temple -->
+            <path d="M45 55 C15 55, 0 85, 3 125" stroke="#b8860b" stroke-width="6.5" fill="none" stroke-linecap="round"/>
+            <path d="M3 115 C2 120, 3 123, 3 125" stroke="#111111" stroke-width="9" fill="none" stroke-linecap="round"/>
+            <!-- Right temple -->
+            <path d="M275 55 C305 55, 320 85, 317 125" stroke="#b8860b" stroke-width="6.5" fill="none" stroke-linecap="round"/>
+            <path d="M317 115 C318 120, 317 123, 317 125" stroke="#111111" stroke-width="9" fill="none" stroke-linecap="round"/>
+            <!-- Left Rim (Black & Gold) -->
+            <rect x="45" y="32" width="102" height="72" rx="14" fill="#FFFFFF" fill-opacity="0.03" stroke="#111111" stroke-width="12"/>
+            <rect x="47" y="34" width="98" height="68" rx="12" stroke="#b8860b" stroke-width="2.5" fill="none"/>
+            <!-- Right Rim (Black & Gold) -->
+            <rect x="173" y="32" width="102" height="72" rx="14" fill="#FFFFFF" fill-opacity="0.03" stroke="#111111" stroke-width="12"/>
+            <rect x="175" y="34" width="98" height="68" rx="12" stroke="#b8860b" stroke-width="2.5" fill="none"/>
+            <!-- Bridge -->
+            <path d="M147 57 C152 48, 166 48, 173 57" stroke="#b8860b" stroke-width="10" stroke-linecap="round" fill="none"/>
+            <path d="M147 57 C152 48, 166 48, 173 57" stroke="#111111" stroke-width="4.5" stroke-linecap="round" fill="none"/>
+            <!-- Glare reflections -->
+            <path d="M60 44 L95 79" stroke="#ffffff" stroke-width="5.5" stroke-linecap="round" opacity="0.35"/>
+            <path d="M188 44 L223 79" stroke="#ffffff" stroke-width="5.5" stroke-linecap="round" opacity="0.35"/>
+            <!-- Endpiece studs -->
+            <circle cx="53" cy="44" r="3.5" fill="#ffd700"/>
+            <circle cx="267" cy="44" r="3.5" fill="#ffd700"/>
+          </g>
+        </svg>
+      </div>
     </div>
+    
+    <!-- Slide 2: Wallets & Belts -->
     <div class="hero-slide s2">
       <div class="hero-content">
         <span class="eyebrow2">Accessories</span>
@@ -27,8 +73,63 @@
           <a href="{{ url_for('catalog.category', slug='mens-belts') }}" class="btn-hero-secondary">Shop Belts</a>
         </div>
       </div>
+      
+      <!-- Right-side Leather Accessories Graphic -->
+      <div class="hero-graphic s2-graphic">
+        <svg viewBox="0 0 320 200" class="leather-accessories" xmlns="http://www.w3.org/2000/svg">
+          <filter id="leatherShadow" x="-20%" y="-20%" width="140%" height="140%">
+            <feDropShadow dx="0" dy="20" stdDeviation="15" flood-color="#000000" flood-opacity="0.75"/>
+          </filter>
+          <g filter="url(#leatherShadow)">
+            <!-- Curved Belt in background -->
+            <path d="M 30 160 C 130 200, 250 150, 280 100 C 295 75, 270 45, 230 55" stroke="#4a2104" stroke-width="26" stroke-linecap="round" fill="none"/>
+            <path d="M 32 160 C 130 200, 250 150, 280 100 C 295 75, 270 45, 230 55" stroke="#b45309" stroke-width="1.2" stroke-dasharray="5,5" stroke-linecap="round" fill="none" opacity="0.8"/>
+            
+            <!-- Folded Leather Wallet -->
+            <g transform="rotate(-6, 150, 100)">
+              <!-- Main body -->
+              <rect x="65" y="45" width="145" height="95" rx="8" fill="#5c2c06" stroke="#271002" stroke-width="2.5"/>
+              <rect x="69" y="49" width="137" height="87" rx="6" fill="none" stroke="#d97706" stroke-width="1.5" stroke-dasharray="3.5,3.5" opacity="0.8"/>
+              <!-- Flap slot -->
+              <path d="M 65 92 H 210" stroke="#271002" stroke-width="2.5"/>
+              <!-- Gold metal logo plate -->
+              <rect x="155" y="65" width="34" height="18" rx="2.5" fill="#d97706" stroke="#b45309" stroke-width="1"/>
+              <circle cx="172" cy="74" r="3" fill="#fef08a"/>
+            </g>
+            
+            <!-- Shiny Gold Buckle -->
+            <g transform="translate(200, 40) rotate(12)">
+              <rect x="0" y="0" width="46" height="38" rx="7" fill="#fbbf24" stroke="#d97706" stroke-width="2.5"/>
+              <rect x="9" y="8" width="28" height="22" rx="3" fill="#1c0b00"/>
+              <!-- Buckle pin -->
+              <line x1="23" y1="2" x2="23" y2="18" stroke="#fbbf24" stroke-width="5.5" stroke-linecap="round"/>
+            </g>
+          </g>
+        </svg>
+      </div>
     </div>
+    
+    <!-- Slide 3: Computer Glasses -->
     <div class="hero-slide s3">
+      <!-- Cyber perspective grid background -->
+      <svg class="bg-cyber-grid" viewBox="0 0 1440 520" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="gridGrad" x1="100%" y1="0%" x2="0%" y2="0%">
+            <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.15" />
+            <stop offset="50%" stop-color="#3b82f6" stop-opacity="0.05" />
+            <stop offset="100%" stop-color="#000000" stop-opacity="0" />
+          </linearGradient>
+        </defs>
+        <line x1="550" y1="100" x2="1440" y2="100" stroke="url(#gridGrad)" stroke-width="1"/>
+        <line x1="550" y1="200" x2="1440" y2="200" stroke="url(#gridGrad)" stroke-width="1"/>
+        <line x1="550" y1="300" x2="1440" y2="300" stroke="url(#gridGrad)" stroke-width="1"/>
+        <line x1="550" y1="400" x2="1440" y2="400" stroke="url(#gridGrad)" stroke-width="1"/>
+        <line x1="880" y1="0" x2="720" y2="520" stroke="url(#gridGrad)" stroke-width="1"/>
+        <line x1="1040" y1="0" x2="960" y2="520" stroke="url(#gridGrad)" stroke-width="1"/>
+        <line x1="1200" y1="0" x2="1200" y2="520" stroke="url(#gridGrad)" stroke-width="1"/>
+        <line x1="1360" y1="0" x2="1440" y2="520" stroke="url(#gridGrad)" stroke-width="1"/>
+      </svg>
+      
       <div class="hero-content">
         <span class="eyebrow2">Screen Protection</span>
         <h1>Blue-cut <em>computer glasses</em>.</h1>
@@ -37,7 +138,38 @@
           <a href="{{ url_for('catalog.category', slug='computer-glasses') }}" class="btn-hero-primary">Shop Computer Glasses</a>
         </div>
       </div>
+      
+      <!-- Right-side Computer Glasses Graphic -->
+      <div class="hero-graphic s3-graphic">
+        <div class="neon-glow-circle"></div>
+        <svg viewBox="0 0 320 180" class="cyber-glasses" xmlns="http://www.w3.org/2000/svg">
+          <filter id="neonShadow" x="-20%" y="-20%" width="140%" height="140%">
+            <feDropShadow dx="0" dy="18" stdDeviation="15" flood-color="#06b6d4" flood-opacity="0.35"/>
+            <feDropShadow dx="0" dy="8" stdDeviation="6" flood-color="#000000" flood-opacity="0.5"/>
+          </filter>
+          <g filter="url(#neonShadow)" transform="rotate(7, 160, 90)">
+            <!-- Temples -->
+            <path d="M45 55 C15 55, 0 85, 3 125" stroke="#1e293b" stroke-width="6.5" fill="none" stroke-linecap="round"/>
+            <path d="M275 55 C305 55, 320 85, 317 125" stroke="#1e293b" stroke-width="6.5" fill="none" stroke-linecap="round"/>
+            <!-- Left Rim (Matt Black) -->
+            <rect x="45" y="32" width="102" height="72" rx="14" fill="#082f49" fill-opacity="0.15" stroke="#0f172a" stroke-width="11"/>
+            <!-- Right Rim (Matt Black) -->
+            <rect x="173" y="32" width="102" height="72" rx="14" fill="#082f49" fill-opacity="0.15" stroke="#0f172a" stroke-width="11"/>
+            <!-- Bridge -->
+            <path d="M147 55 C152 50, 166 50, 173 55" stroke="#0f172a" stroke-width="9" stroke-linecap="round" fill="none"/>
+            <!-- Cyan Blue-cut lens reflection glow -->
+            <path d="M53 40 L97 84" stroke="#06b6d4" stroke-width="7" stroke-linecap="round" opacity="0.8"/>
+            <path d="M181 40 L225 84" stroke="#06b6d4" stroke-width="7" stroke-linecap="round" opacity="0.8"/>
+            <path d="M68 40 L84 56" stroke="#38bdf8" stroke-width="3.5" stroke-linecap="round" opacity="0.9"/>
+            <path d="M196 40 L212 56" stroke="#38bdf8" stroke-width="3.5" stroke-linecap="round" opacity="0.9"/>
+            <!-- Neon studs -->
+            <circle cx="53" cy="42" r="3.5" fill="#06b6d4"/>
+            <circle cx="267" cy="42" r="3.5" fill="#06b6d4"/>
+          </g>
+        </svg>
+      </div>
     </div>
+    
   </div>
   <div class="hero-dots" id="heroDots">
     <button class="on" onclick="goSlide(0)"></button>
@@ -60,8 +192,7 @@
   <div class="cat-grid-premium">
     {% for cat in categories %}
     <a href="{{ url_for('catalog.category', slug=cat.slug) }}" class="cat-card">
-      <div class="cat-card-inner">
-        <span class="cat-icon-bg">{{ icon('wallet' if cat.kind=='accessory' else 'glasses') }}</span>
+      <div class="cat-card-inner" style="background-image: linear-gradient(180deg, rgba(11,29,58,0.15) 0%, rgba(11,29,58,0.85) 100%), url('{{ url_for('static', filename='images/categories/' ~ cat.slug ~ '.png') }}'); background-size: cover; background-position: center;">
         <span class="cat-count">{{ cat.products.filter_by(is_active=True).count() }} styles</span>
         <span class="cat-name">{{ cat.name }}</span>
         <span class="cat-cta">Explore →</span>
@@ -87,12 +218,28 @@
   <div style="text-align:center;margin-top:30px"><a href="{{ url_for('catalog.category', slug='eyeglasses') }}" class="btn-primary big">View All Eyeglasses</a></div>
 </div></section>
 
+<!-- MELLER BRAND SHOWCASE BANNER -->
+<section class="meller-showcase-section" style="padding:40px 24px"><div class="section-inner">
+  <div class="meller-banner-container">
+    <div class="meller-banner-left">
+      <span class="meller-tag">COUTURE COLLECTION</span>
+      <h2 class="meller-title">AYAN</h2>
+      <span class="meller-subtitle">COUTURE EYEWEAR</span>
+      <p class="meller-pitch">IT'S <span class="highlight-orange">OUT</span> THERE!</p>
+      <a href="{{ url_for('catalog.category', slug='sunglasses') }}" class="btn-meller">Explore Series</a>
+    </div>
+    
+    <div class="meller-banner-right">
+    </div>
+  </div>
+</div></section>
+
 <!-- FRAME SHAPE GUIDE (dynamic links) -->
 <section style="background:var(--cream)"><div class="section-inner">
   <div class="section-header"><span class="section-tag">Find Your Fit</span><h2 class="section-title">Get the Perfect Shape</h2></div>
   <div class="shape-row">
     {% from "partials/shape_icons.html" import shape_svg %}
-    {% for s in ['Rectangle','Cat-eye','Aviator','Round','Square','Wayfarer'] %}
+    {% for s in ['Rectangle','Cateye','Aviator','Geometric','Round','Clubmaster','Square'] %}
     <a href="{{ url_for('catalog.category', slug='eyeglasses', shape=s) }}" class="shape-tile">
       <div class="shape-circle">{{ shape_svg(s) }}</div><span>{{ s }}</span>
     </a>{% endfor %}
@@ -119,12 +266,17 @@
 </div></section>
 
 <!-- BRANDS (dynamic) -->
+{% from "partials/brand_logos.html" import render_brand_logo, render_brand_desc %}
 <section style="background:var(--cream)"><div class="section-inner">
   <div class="section-header"><span class="section-tag">Trusted</span><h2 class="section-title">Lens Brands We Carry</h2></div>
   <div class="brand-card-grid">
     {% for b in brands %}
     <a href="{{ url_for('catalog.search', brand=b.slug) }}" class="brand-card">
-      <span class="brand-card-name">{{ b.name }}</span><span class="brand-card-cta">Shop →</span>
+      <div class="brand-card-top">
+        {{ render_brand_logo(b.slug) }}
+        <p class="brand-card-desc">{{ render_brand_desc(b.slug) }}</p>
+      </div>
+      <span class="brand-card-cta">Shop Collection →</span>
     </a>{% endfor %}
   </div>
 </div></section>

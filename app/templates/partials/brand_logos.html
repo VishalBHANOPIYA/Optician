@@ -1,0 +1,95 @@
+{% macro render_brand_logo(slug) %}
+  {% if slug == 'zeiss' %}
+    <div class="brand-svg-wrapper">
+      <svg viewBox="0 0 160 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="160" height="50" rx="4" fill="#005EB8"/>
+        <text x="50%" y="56%" dominant-baseline="middle" text-anchor="middle" fill="#FFFFFF" font-family="'Inter', sans-serif" font-weight="900" font-size="22" letter-spacing="2">ZEISS</text>
+      </svg>
+    </div>
+  {% elif slug == 'crizal' %}
+    <div class="brand-svg-wrapper">
+      <svg viewBox="0 0 160 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <text x="10" y="34" fill="#0E7C7B" font-family="'Outfit', sans-serif" font-weight="800" font-size="28">Crizal</text>
+        <path d="M105 15 L108 22 L115 25 L108 28 L105 35 L102 28 L95 25 L102 22 Z" fill="#40E0D0" opacity="0.8"/>
+        <path d="M120 28 L122 32 L126 33 L122 34 L120 38 L118 34 L114 33 L118 32 Z" fill="#20B2AA" opacity="0.6"/>
+      </svg>
+    </div>
+  {% elif slug == 'essilor' %}
+    <div class="brand-svg-wrapper">
+      <svg viewBox="0 0 160 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <text x="10" y="34" fill="#0B2347" font-family="'Playfair Display', serif" font-weight="800" font-style="italic" font-size="28">essilor</text>
+        <path d="M10 38 C 50 38, 100 45, 145 38" stroke="#FF5722" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+    </div>
+  {% elif slug == 'kodak' %}
+    <div class="brand-svg-wrapper">
+      <svg viewBox="0 0 160 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="40" height="40" rx="6" fill="#EEEEEE"/>
+        <path d="M10 10 L30 10 A 10 10 0 0 1 40 20 L40 40 L32 40 L32 20 A 2 2 0 0 0 30 18 L10 18 Z" fill="#E50914"/>
+        <rect x="15" y="24" width="8" height="12" fill="#F5C518"/>
+        <text x="55" y="28" fill="#111111" font-family="'Inter', sans-serif" font-weight="900" font-size="18" letter-spacing="1">Kodak</text>
+        <text x="55" y="40" fill="#666666" font-family="'Inter', sans-serif" font-weight="500" font-size="10" letter-spacing="1.5">LENS</text>
+      </svg>
+    </div>
+  {% elif slug == 'rodenstock' %}
+    <div class="brand-svg-wrapper">
+      <svg viewBox="0 0 160 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8 8 L24 8 C 34 8, 34 22, 24 22 L16 22 L16 42 M16 22 L28 42" stroke="#111111" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>
+        <text x="38" y="32" fill="#111111" font-family="'Inter', sans-serif" font-weight="800" font-size="15" letter-spacing="0.5">RODENSTOCK</text>
+      </svg>
+    </div>
+  {% elif slug == 'blumax' %}
+    <div class="brand-svg-wrapper">
+      <svg viewBox="0 0 160 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <text x="10" y="34" fill="#0A369D" font-family="'Outfit', sans-serif" font-weight="900" font-size="26">BLUMAX</text>
+        <path d="M125 15 C125 15, 135 18, 145 15 L145 28 C145 36, 135 41, 125 43 C115 41, 105 36, 105 28 L105 15 Z" fill="#4B88E4" opacity="0.2"/>
+        <path d="M115 20 C125 22, 135 22, 145 20" stroke="#00D2FF" stroke-width="2" stroke-linecap="round"/>
+        <path d="M110 28 C120 30, 130 30, 140 28" stroke="#00D2FF" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </div>
+  {% elif slug == 'nova' %}
+    <div class="brand-svg-wrapper">
+      <svg viewBox="0 0 160 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <text x="10" y="34" fill="#1E293B" font-family="'Inter', sans-serif" font-weight="900" font-size="30" letter-spacing="2">NOVA</text>
+        <path d="M110 25 C118 25, 120 23, 120 15 C120 23, 122 25, 130 25 C122 25, 120 27, 120 35 C120 27, 118 25, 110 25 Z" fill="#F59E0B"/>
+      </svg>
+    </div>
+  {% elif slug == 'satin' %}
+    <div class="brand-svg-wrapper">
+      <svg viewBox="0 0 160 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <text x="10" y="34" fill="#8B5CF6" font-family="'Playfair Display', serif" font-weight="700" font-size="28" letter-spacing="1">Satin</text>
+        <path d="M85 30 Q 105 10, 125 30 T 165 30" stroke="#C084FC" stroke-width="3" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+  {% else %}
+    <div class="brand-svg-wrapper">
+      <svg viewBox="0 0 160 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M15 25 C 25 15, 45 15, 55 25 C 45 35, 25 35, 15 25 Z" stroke="#3B82F6" stroke-width="3" fill="none"/>
+        <circle cx="35" cy="25" r="5" fill="#3B82F6"/>
+        <text x="65" y="34" fill="#1E293B" font-family="'Inter', sans-serif" font-weight="700" font-size="24">SeeOne</text>
+      </svg>
+    </div>
+  {% endif %}
+{% endmacro %}
+
+{% macro render_brand_desc(slug) %}
+  {% if slug == 'zeiss' %}
+    Premium High-End German Optics
+  {% elif slug == 'crizal' %}
+    Advanced Anti-Glare & Protection
+  {% elif slug == 'essilor' %}
+    World Leader in Progressive Lenses
+  {% elif slug == 'kodak' %}
+    Trusted Clarity & Color Contrast
+  {% elif slug == 'rodenstock' %}
+    German Precision Engineering
+  {% elif slug == 'blumax' %}
+    Maximum Blue Light Protection
+  {% elif slug == 'nova' %}
+    Premium Digital Precision Lenses
+  {% elif slug == 'satin' %}
+    Satin-Smooth Coating Tech
+  {% else %}
+    Clear Entry-Level Daily Vision
+  {% endif %}
+{% endmacro %}

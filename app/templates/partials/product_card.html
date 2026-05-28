@@ -14,7 +14,11 @@
   <a href="{{ url_for('catalog.product_detail', slug=p.slug) }}" class="card-link">
     <div class="product-media">
       {% if p.primary_image %}
-        <img src="{{ url_for('static', filename='uploads/' ~ p.primary_image) }}" alt="{{ p.name }}">
+        {% if p.primary_image.startswith('http') %}
+          <img src="{{ p.primary_image }}" alt="{{ p.name }}">
+        {% else %}
+          <img src="{{ url_for('static', filename='uploads/' ~ p.primary_image) }}" alt="{{ p.name }}">
+        {% endif %}
       {% else %}
         <div class="product-placeholder">{{ icon('wallet' if p.category and p.category.kind=='accessory' else 'glasses') }}</div>
       {% endif %}
