@@ -1,111 +1,162 @@
 {% extends "base.html" %}
 {% from "partials/icons.html" import icon %}
-{% from "partials/shape_icons.html" import shape_svg %}
-{% block title %}Ayan-Optics · Pocket-friendly Eyewear in Indore{% endblock %}
+{% block title %}Ayan-Optics · Premium Pocket-friendly Eyewear in Indore{% endblock %}
 {% block content %}
 
-<section class="hero">
-  <div class="container hero-inner">
-    <div class="hero-text">
-      <p class="eyebrow">INDORE'S FAVOURITE OPTICIAN · 4.9★ (140 reviews)</p>
-      <h1>Clear vision, <span>pocket-friendly</span> prices.</h1>
-      <p class="hero-sub">1000+ frame designs and premium lens brands at honest prices. Pick online, collect in-store.</p>
-      <div class="hero-cta">
-        <a href="{{ url_for('catalog.category', slug='eyeglasses') }}" class="btn-primary big">Shop Eyeglasses</a>
-        <a href="{{ url_for('catalog.category', slug='sunglasses') }}" class="btn-ghost big">Shop Sunglasses</a>
+<!-- HERO CAROUSEL -->
+<section class="home-hero" id="homeHero" style="padding:0">
+  <div class="hero-slides">
+    <div class="hero-slide s1 on">
+      <div class="hero-content">
+        <span class="eyebrow2">Indore's Favourite Optician</span>
+        <h1>See the world in <em>style</em>, for less.</h1>
+        <p>1000+ frame designs and premium lens brands at honest prices. Pick online, collect in-store.</p>
+        <div class="hero-btns">
+          <a href="{{ url_for('catalog.category', slug='eyeglasses') }}" class="btn-hero-primary">Shop Eyeglasses</a>
+          <a href="{{ url_for('catalog.category', slug='sunglasses') }}" class="btn-hero-secondary">Shop Sunglasses</a>
+        </div>
       </div>
-      <div class="hero-trust"><span>✔ 1000+ Designs</span><span>✔ Top Lens Brands</span><span>✔ Expert Fitting</span></div>
     </div>
-    <div class="hero-art"><div class="hero-blob">{{ icon('glasses') }}</div></div>
+    <div class="hero-slide s2">
+      <div class="hero-content">
+        <span class="eyebrow2">Accessories</span>
+        <h1>Genuine leather <em>wallets &amp; belts</em>.</h1>
+        <p>Handpicked men's wallets and belts to complete your look.</p>
+        <div class="hero-btns">
+          <a href="{{ url_for('catalog.category', slug='mens-wallets') }}" class="btn-hero-primary">Shop Wallets</a>
+          <a href="{{ url_for('catalog.category', slug='mens-belts') }}" class="btn-hero-secondary">Shop Belts</a>
+        </div>
+      </div>
+    </div>
+    <div class="hero-slide s3">
+      <div class="hero-content">
+        <span class="eyebrow2">Screen Protection</span>
+        <h1>Blue-cut <em>computer glasses</em>.</h1>
+        <p>Protect your eyes from screen strain — starting at pocket-friendly prices.</p>
+        <div class="hero-btns">
+          <a href="{{ url_for('catalog.category', slug='computer-glasses') }}" class="btn-hero-primary">Shop Computer Glasses</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-dots" id="heroDots">
+    <button class="on" onclick="goSlide(0)"></button>
+    <button onclick="goSlide(1)"></button>
+    <button onclick="goSlide(2)"></button>
   </div>
 </section>
 
-<!-- TOP CATEGORIES -->
-<section class="container section">
-  <h2 class="section-title">Top Categories</h2>
-  <div class="cat-grid">
+<!-- TRUST BAR -->
+<div class="trust-bar"><div class="trust-inner">
+  <div class="trust-item"><span class="ic">{{ icon('tag') }}</span><div><strong>Pocket-Friendly</strong><span>Honest, low prices</span></div></div>
+  <div class="trust-item"><span class="ic">{{ icon('check') }}</span><div><strong>Expert Fitting</strong><span>Skilled in-store staff</span></div></div>
+  <div class="trust-item"><span class="ic">{{ icon('glasses') }}</span><div><strong>1000+ Designs</strong><span>Huge in-store range</span></div></div>
+  <div class="trust-item"><span class="ic">{{ icon('shield') }}</span><div><strong>Top Lens Brands</strong><span>Zeiss, Essilor & more</span></div></div>
+</div></div>
+
+<!-- SHOP BY CATEGORY (dynamic) -->
+<section><div class="section-inner">
+  <div class="section-header"><span class="section-tag">Browse</span><h2 class="section-title">Shop by Category</h2><p class="section-desc">Everything we offer, straight from our Indore store.</p></div>
+  <div class="cat-grid-premium">
     {% for cat in categories %}
-    <a href="{{ url_for('catalog.category', slug=cat.slug) }}" class="cat-tile">
-      <div class="cat-icon">{{ icon('wallet' if cat.kind=='accessory' else 'glasses') }}</div>
-      <span>{{ cat.name }}</span>
+    <a href="{{ url_for('catalog.category', slug=cat.slug) }}" class="cat-card">
+      <div class="cat-card-inner">
+        <span class="cat-icon-bg">{{ icon('wallet' if cat.kind=='accessory' else 'glasses') }}</span>
+        <span class="cat-count">{{ cat.products.filter_by(is_active=True).count() }} styles</span>
+        <span class="cat-name">{{ cat.name }}</span>
+        <span class="cat-cta">Explore →</span>
+      </div>
     </a>
     {% endfor %}
   </div>
-</section>
+</div></section>
 
-<!-- SHOP BY SHAPE -->
-<section class="container section">
-  <h2 class="section-title">Get the perfect shape</h2>
-  <div class="shape-row">
-    {% for s in ['Rectangle','Cat-eye','Aviator','Round','Square','Wayfarer'] %}
-    <a href="{{ url_for('catalog.category', slug='eyeglasses', shape=s) }}" class="shape-tile">
-      <div class="shape-circle">{{ shape_svg(s) }}</div>
-      <span>{{ s }}</span>
-    </a>
-    {% endfor %}
-  </div>
-</section>
+<!-- OFFERS STRIP -->
+<section class="offers-strip" style="padding:0"><div class="offers-inner">
+  <div class="offer-item"><h3>Under ₹999</h3><p><a href="{{ url_for('catalog.search', max=999) }}" style="color:#fff">Budget picks →</a></p></div>
+  <div class="offer-item"><h3>Bestsellers</h3><p><a href="{{ url_for('catalog.search', sort='newest') }}" style="color:#fff">Most loved →</a></p></div>
+  <div class="offer-item"><h3>New Arrivals</h3><p><a href="{{ url_for('catalog.search', sort='newest') }}" style="color:#fff">Fresh styles →</a></p></div>
+</div></section>
 
-<section class="value-strip">
-  <div class="container value-inner">
-    <div class="value-item"><strong>Pocket-Friendly</strong><span>Honest, low prices</span></div>
-    <div class="value-item"><strong>Skilled Workers</strong><span>Expert fitting & advice</span></div>
-    <div class="value-item"><strong>1000+ Designs</strong><span>Huge in-store range</span></div>
-    <div class="value-item"><strong>Top Brands</strong><span>Zeiss, Essilor & more</span></div>
-  </div>
-</section>
-
-<!-- FEATURED -->
-<section class="container section">
-  <div class="section-head">
-    <h2 class="section-title">Featured Picks</h2>
-    <a href="{{ url_for('catalog.search') }}" class="see-all">View all →</a>
-  </div>
+<!-- FEATURED PRODUCTS (dynamic) -->
+<section><div class="section-inner">
+  <div class="section-header"><span class="section-tag">Handpicked</span><h2 class="section-title">Featured Picks</h2></div>
   {% if featured %}
   <div class="product-grid">{% for p in featured %}{% include "partials/product_card.html" %}{% endfor %}</div>
-  {% else %}
-  <div class="empty-note"><p>No featured products yet. Add some from the admin panel.</p></div>
-  {% endif %}
-</section>
+  {% else %}<div class="empty-note">No featured products yet. Add some from the admin panel.</div>{% endif %}
+  <div style="text-align:center;margin-top:30px"><a href="{{ url_for('catalog.category', slug='eyeglasses') }}" class="btn-primary big">View All Eyeglasses</a></div>
+</div></section>
 
-<!-- OUR BRANDS (cards) -->
-<section class="container section">
-  <h2 class="section-title">Lens Brands We Trust</h2>
+<!-- FRAME SHAPE GUIDE (dynamic links) -->
+<section style="background:var(--cream)"><div class="section-inner">
+  <div class="section-header"><span class="section-tag">Find Your Fit</span><h2 class="section-title">Get the Perfect Shape</h2></div>
+  <div class="shape-row">
+    {% from "partials/shape_icons.html" import shape_svg %}
+    {% for s in ['Rectangle','Cat-eye','Aviator','Round','Square','Wayfarer'] %}
+    <a href="{{ url_for('catalog.category', slug='eyeglasses', shape=s) }}" class="shape-tile">
+      <div class="shape-circle">{{ shape_svg(s) }}</div><span>{{ s }}</span>
+    </a>{% endfor %}
+  </div>
+</div></section>
+
+<!-- BESTSELLERS (dynamic) -->
+{% if bestsellers %}
+<section><div class="section-inner">
+  <div class="section-header"><span class="section-tag">Most Loved</span><h2 class="section-title">Bestsellers</h2></div>
+  <div class="product-grid">{% for p in bestsellers %}{% include "partials/product_card.html" %}{% endfor %}</div>
+</div></section>
+{% endif %}
+
+<!-- LENS TYPES (info) -->
+<section><div class="section-inner">
+  <div class="section-header"><span class="section-tag">Lenses</span><h2 class="section-title">Lens Options We Fit</h2></div>
+  <div class="lens-grid">
+    <div class="lens-card"><div class="ic">{{ icon('shield') }}</div><h4>Anti-Glare</h4><p>Reduces reflections & glare.</p></div>
+    <div class="lens-card"><div class="ic">{{ icon('glasses') }}</div><h4>Blue-Cut</h4><p>Protects from screen strain.</p></div>
+    <div class="lens-card"><div class="ic">{{ icon('star') }}</div><h4>Photochromic</h4><p>Darkens in sunlight.</p></div>
+    <div class="lens-card"><div class="ic">{{ icon('check') }}</div><h4>Progressive</h4><p>Multi-distance in one lens.</p></div>
+  </div>
+</div></section>
+
+<!-- BRANDS (dynamic) -->
+<section style="background:var(--cream)"><div class="section-inner">
+  <div class="section-header"><span class="section-tag">Trusted</span><h2 class="section-title">Lens Brands We Carry</h2></div>
   <div class="brand-card-grid">
     {% for b in brands %}
     <a href="{{ url_for('catalog.search', brand=b.slug) }}" class="brand-card">
-      <span class="brand-card-name">{{ b.name }}</span>
-      <span class="brand-card-cta">Shop ›</span>
-    </a>
-    {% endfor %}
+      <span class="brand-card-name">{{ b.name }}</span><span class="brand-card-cta">Shop →</span>
+    </a>{% endfor %}
   </div>
-</section>
+</div></section>
 
-<!-- COLLECTIONS / "Exclusively at Ayan-Optics" style promo grid -->
-<section class="container section">
-  <h2 class="section-title">Explore Collections</h2>
-  <div class="collection-grid">
-    <a href="{{ url_for('catalog.category', slug='eyeglasses', shape='Round') }}" class="collection-card c1"><div><strong>Classic Round</strong><span>Timeless frames</span></div></a>
-    <a href="{{ url_for('catalog.category', slug='computer-glasses') }}" class="collection-card c2"><div><strong>Blue-Cut</strong><span>Screen protection</span></div></a>
-    <a href="{{ url_for('catalog.category', slug='kids-glasses') }}" class="collection-card c3"><div><strong>For Kids</strong><span>Flexible & fun</span></div></a>
-    <a href="{{ url_for('catalog.category', slug='sunglasses', shape='Aviator') }}" class="collection-card c4"><div><strong>Aviator Sun</strong><span>Bold & UV-safe</span></div></a>
-    <a href="{{ url_for('catalog.category', slug='mens-wallets') }}" class="collection-card c5"><div><strong>Leather Wallets</strong><span>For men</span></div></a>
-    <a href="{{ url_for('catalog.category', slug='mens-belts') }}" class="collection-card c6"><div><strong>Formal Belts</strong><span>For men</span></div></a>
+<!-- REVIEWS (from real Google reviews shown to you) -->
+<section class="reviews-bg"><div class="section-inner">
+  <div class="section-header"><span class="section-tag">⭐ 4.9 · 140 Reviews</span><h2 class="section-title">What Indore Says</h2></div>
+  <div class="reviews-grid">
+    <div class="review-card"><div class="review-stars">{{ icon('star') }}{{ icon('star') }}{{ icon('star') }}{{ icon('star') }}{{ icon('star') }}</div><p>"Helpful and kind. Good options for frames and highly skilled workers."</p><span class="review-who">Google Review</span></div>
+    <div class="review-card"><div class="review-stars">{{ icon('star') }}{{ icon('star') }}{{ icon('star') }}{{ icon('star') }}{{ icon('star') }}</div><p>"Best glasses, unique designs and 1000+ options to choose from. Must visit!"</p><span class="review-who">Google Review</span></div>
+    <div class="review-card"><div class="review-stars">{{ icon('star') }}{{ icon('star') }}{{ icon('star') }}{{ icon('star') }}{{ icon('star') }}</div><p>"Best shop and best part — on-time delivery of specs."</p><span class="review-who">Google Review</span></div>
   </div>
-</section>
+</div></section>
 
-{% if bestsellers %}
-<section class="container section">
-  <div class="section-head"><h2 class="section-title">Bestsellers</h2><a href="{{ url_for('catalog.search', sort='newest') }}" class="see-all">View all →</a></div>
-  <div class="product-grid">{% for p in bestsellers %}{% include "partials/product_card.html" %}{% endfor %}</div>
-</section>
-{% endif %}
-
-<section class="store-cta">
-  <div class="container">
-    <h2>Visit us in Indore</h2>
-    <p>27, 60 Feet Road, Ext-1, Sukhdev Nagar, Indore, MP 452005 · Open till 11 PM</p>
-    <a href="tel:9826218888" class="btn-primary big">📞 Call 098262 18888</a>
+<!-- VISIT STORE -->
+<section class="store-section"><div class="section-inner"><div class="store-grid">
+  <div class="store-info">
+    <h2>Visit Us in Indore</h2>
+    <p class="ci-row">{{ icon('pin') }} {{ SHOP_ADDRESS }}</p>
+    <p class="ci-row">{{ icon('phone') }} {{ SHOP_PHONE }}</p>
+    <p class="ci-row">{{ icon('check') }} Open every day till 11 PM</p>
+    <div class="store-btns">
+      <a href="tel:{{ SHOP_PHONE_RAW }}" class="btn-hero-primary">Call Now</a>
+      <a href="https://www.google.com/maps/dir/?api=1&destination=Ayan+Opticals+Sukhdev+Nagar+Indore" target="_blank" class="btn-hero-secondary">Get Directions</a>
+    </div>
   </div>
-</section>
+  <div class="store-map"><iframe title="Ayan-Optics" src="https://www.google.com/maps?q=27%2C+60+Feet+Road+Sukhdev+Nagar+Indore&output=embed" loading="lazy"></iframe></div>
+</div></div></section>
+
+<script>
+let hs=0;const slides=document.querySelectorAll('#homeHero .hero-slide');const dots=document.querySelectorAll('#heroDots button');
+function goSlide(i){slides[hs].classList.remove('on');dots[hs].classList.remove('on');hs=i;slides[hs].classList.add('on');dots[hs].classList.add('on');}
+setInterval(()=>goSlide((hs+1)%slides.length),5000);
+</script>
 {% endblock %}
