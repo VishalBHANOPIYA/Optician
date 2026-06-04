@@ -1,0 +1,9 @@
+{
+  "name": "ayan-optics",
+  "version": "1.0.0",
+  "description": "Flask app for Ayan Optics with dev and tunnel scripts",
+  "scripts": {
+    "dev": "./venv/bin/flask run --debug",
+    "tunnel": "npx cloudflared tunnel --url http://localhost:5000"
+  }
+}

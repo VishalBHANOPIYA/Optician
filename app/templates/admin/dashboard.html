@@ -21,7 +21,7 @@
       <thead><tr><th>Customer</th><th>Product</th><th>Status</th><th>When</th></tr></thead>
       <tbody>
       {% for i in recent %}
-        <tr onclick="location.href='{{ url_for('admin.inquiry_detail', iid=i.id) }}'" style="cursor:pointer">
+        <tr data-href="{{ url_for('admin.inquiry_detail', iid=i.id) }}" style="cursor:pointer">
           <td>{{ i.guest_name or 'Guest' }}</td>
           <td>{{ i.product.name if i.product else '—' }}</td>
           <td><span class="badge-status s-{{ i.status }}">{{ i.status }}</span></td>

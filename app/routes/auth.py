@@ -36,11 +36,14 @@ def signup():
 
 @auth_bp.route("/login", methods=["GET", "POST"])
 def login():
-    if current_user.is_authenticated and isinstance(current_user, User):
+    if current_user.is_authenticated:
+        if isinstance(current_user, Admin):
+            return redirect(url_for("admin.dashboard"))
         return redirect(url_for("main.home"))
     form = LoginForm()
     if form.validate_on_submit():
         email = form.email.data.lower().strip()
+        # Try finding User first
         user = User.query.filter_by(email=email).first()
         if user and user.check_password(form.password.data):
             if not user.is_active_user:
@@ -51,14 +54,22 @@ def login():
             if nxt and nxt.startswith("/") and not nxt.startswith("//"):
                 return redirect(nxt)
             return redirect(url_for("main.home"))
+        
+        # Try finding Admin next (by email or username)
+        admin = Admin.query.filter((Admin.email == email) | (Admin.username == email)).first()
+        if admin and admin.check_password(form.password.data):
+            from datetime import datetime
+            login_user(admin, remember=form.remember.data)
+            admin.last_login = datetime.utcnow()
+            db.session.commit()
+            return redirect(url_for("admin.dashboard"))
+            
         flash("Invalid email or password.", "danger")
     return render_template("auth/login.html", form=form)
 
 
 @auth_bp.route("/logout")
 def logout():
-    # Only log out customers here; admins use their own logout
-    if isinstance(current_user, User):
-        logout_user()
-        flash("You have been logged out.", "info")
+    logout_user()
+    flash("You have been logged out.", "info")
     return redirect(url_for("main.home"))

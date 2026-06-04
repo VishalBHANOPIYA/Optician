@@ -61,6 +61,45 @@
         <path d="M85 30 Q 105 10, 125 30 T 165 30" stroke="#C084FC" stroke-width="3" fill="none" stroke-linecap="round"/>
       </svg>
     </div>
+  {% elif slug == 'aqualens' %}
+    <div class="brand-svg-wrapper">
+      <svg viewBox="0 0 160 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <text x="10" y="34" fill="#0096c7" font-family="'Outfit', sans-serif" font-weight="900" font-size="24">Aqualens</text>
+        <path d="M125 25 C125 18, 133 14, 133 14 C133 14, 141 18, 141 25 C141 29, 137 33, 133 33 C129 33, 125 29, 125 25 Z" fill="#00b4d8" opacity="0.8"/>
+      </svg>
+    </div>
+  {% elif slug == 'aquacolor' %}
+    <div class="brand-svg-wrapper">
+      <svg viewBox="0 0 160 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <text x="10" y="34" fill="#0f172a" font-family="'Outfit', sans-serif" font-weight="900" font-size="24">aquacolor</text>
+        <circle cx="125" cy="25" r="9" stroke="#ff007f" stroke-width="2.5" fill="none" opacity="0.8"/>
+        <circle cx="132" cy="25" r="9" stroke="#3b82f6" stroke-width="2.5" fill="none" opacity="0.8"/>
+      </svg>
+    </div>
+  {% elif slug == 'bausch-lomb' %}
+    <div class="brand-svg-wrapper">
+      <svg viewBox="0 0 160 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <text x="10" y="24" fill="#015294" font-family="'Inter', sans-serif" font-weight="900" font-size="16">BAUSCH</text>
+        <text x="10" y="40" fill="#009b48" font-family="'Inter', sans-serif" font-weight="900" font-size="16">& LOMB</text>
+        <path d="M102 15 L117 15 L117 35 L102 35 Z" fill="#015294" opacity="0.25"/>
+        <circle cx="117" cy="25" r="10" fill="#009b48" opacity="0.45"/>
+      </svg>
+    </div>
+  {% elif slug == 'acuvue' %}
+    <div class="brand-svg-wrapper">
+      <svg viewBox="0 0 160 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <text x="10" y="34" fill="#0072bc" font-family="'Outfit', sans-serif" font-weight="800" font-size="26">ACUVUE</text>
+        <path d="M125 18 C135 18, 145 28, 145 28 C145 28, 135 38, 125 38" stroke="#00b5e2" stroke-width="3" stroke-linecap="round" fill="none"/>
+      </svg>
+    </div>
+  {% elif slug == 'alcon' %}
+    <div class="brand-svg-wrapper">
+      <svg viewBox="0 0 160 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <text x="10" y="34" fill="#00529b" font-family="'Inter', sans-serif" font-weight="900" font-size="28" letter-spacing="1">Alcon</text>
+        <circle cx="115" cy="25" r="8" fill="#e57200" opacity="0.8"/>
+        <circle cx="127" cy="25" r="8" fill="#00529b" opacity="0.8"/>
+      </svg>
+    </div>
   {% else %}
     <div class="brand-svg-wrapper">
       <svg viewBox="0 0 160 50" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -89,6 +128,16 @@
     Premium Digital Precision Lenses
   {% elif slug == 'satin' %}
     Satin-Smooth Coating Tech
+  {% elif slug == 'aqualens' %}
+    Premium Hydrogel Contact Lenses
+  {% elif slug == 'aquacolor' %}
+    Trendy Colored Contact Lenses
+  {% elif slug == 'bausch-lomb' %}
+    Global Eye Health & Care Leader
+  {% elif slug == 'acuvue' %}
+    High-Moisture Contact Lenses
+  {% elif slug == 'alcon' %}
+    Advanced Comfort Contact Lenses
   {% else %}
     Clear Entry-Level Daily Vision
   {% endif %}

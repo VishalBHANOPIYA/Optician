@@ -4,20 +4,53 @@ from app.models import Category, Product, Brand
 main_bp = Blueprint("main", __name__)
 
 
+def get_diverse_products(products_list, limit=8, exclude_ids=None):
+    if exclude_ids is None:
+        exclude_ids = set()
+    filtered = [p for p in products_list if p.id not in exclude_ids]
+    
+    # Group products by category_id to ensure category representation
+    by_category = {}
+    for p in filtered:
+        by_category.setdefault(p.category_id, []).append(p)
+        
+    selected = []
+    category_ids = list(by_category.keys())
+    category_ids.sort()
+    
+    indices = {cid: 0 for cid in category_ids}
+    while len(selected) < limit and any(indices[cid] < len(by_category[cid]) for cid in category_ids):
+        for cid in category_ids:
+            if len(selected) >= limit:
+                break
+            if indices[cid] < len(by_category[cid]):
+                selected.append(by_category[cid][indices[cid]])
+                indices[cid] += 1
+    return selected
+
+
 @main_bp.route("/")
 def home():
     categories = (Category.query
                   .filter_by(is_active=True)
                   .order_by(Category.display_order)
                   .all())
-    featured = (Product.query
-                .filter_by(is_active=True, is_featured=True)
-                .order_by(Product.created_at.desc())
-                .limit(8).all())
-    bestsellers = (Product.query
-                   .filter_by(is_active=True, is_bestseller=True)
-                   .order_by(Product.created_at.desc())
-                   .limit(8).all())
+    
+    all_featured = (Product.query
+                    .filter_by(is_active=True, is_featured=True)
+                    .order_by(Product.created_at.desc())
+                    .all())
+    
+    featured = get_diverse_products(all_featured, limit=14)
+    featured_ids = {p.id for p in featured}
+    
+    all_bestsellers = (Product.query
+                       .filter_by(is_active=True, is_bestseller=True)
+                       .order_by(Product.created_at.desc())
+                       .all())
+    
+    bestsellers = get_diverse_products(all_bestsellers, limit=14, exclude_ids=featured_ids)
+    
     brands = Brand.query.filter_by(is_active=True).all()
     return render_template("index.html",
                            categories=categories,

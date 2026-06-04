@@ -33,5 +33,14 @@
     {% block admin_content %}{% endblock %}
   </main>
 </div>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('tr[data-href]').forEach(row => {
+    row.addEventListener('click', () => {
+      window.location.href = row.dataset.href;
+    });
+  });
+});
+</script>
 </body>
 </html>
