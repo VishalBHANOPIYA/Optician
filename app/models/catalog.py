@@ -92,6 +92,34 @@ class Product(db.Model):
             return self.images[0].filename
         return None
 
+    @property
+    def tryon_image(self):
+        import os
+        from flask import current_app
+        # 1. Check if SKU-specific tryon image exists (e.g. cg_3001_tryon.png)
+        sku_clean = self.sku.lower().replace('-', '_')
+        filename = f"{sku_clean}_tryon.png"
+        path = os.path.join(current_app.root_path, 'static', 'uploads', filename)
+        if os.path.exists(path):
+            return filename
+        
+        # 2. Check if shape-specific tryon image exists (e.g. cat_eye_tryon.png, aviator_tryon.png)
+        shape_clean = (self.frame_shape or "").lower().replace('-', '_')
+        shape_filename = f"{shape_clean}_tryon.png"
+        shape_path = os.path.join(current_app.root_path, 'static', 'uploads', shape_filename)
+        if os.path.exists(shape_path):
+            return shape_filename
+            
+        # 3. Fallbacks
+        shape_defaults = {
+            "rectangle": "eg_1001.png",
+            "round": "round_tryon.png",
+        }
+        if shape_clean in shape_defaults:
+            return shape_defaults[shape_clean]
+            
+        return self.primary_image
+
     @staticmethod
     def generate_slug(name, sku):
         return f"{slugify(name)}-{sku.lower()}"

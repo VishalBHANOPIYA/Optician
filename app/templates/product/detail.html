@@ -35,6 +35,12 @@
         {% endfor %}
       </div>
       {% endif %}
+
+      {% if p.category and p.category.kind == 'eyewear' %}
+      <button class="nav-cta" id="openTryOnBtn" style="margin-top: 18px; width: 100%; display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: linear-gradient(135deg, #0096c7 0%, #00b4d8 100%); color: #fff; border: none; border-radius: 10px; padding: 12px 20px; font-weight: 700; font-size: 14.5px; cursor: pointer; box-shadow: 0 4px 12px rgba(0, 150, 199, 0.2);">
+        <i class="fas fa-glasses"></i> Try Virtually (Try-On)
+      </button>
+      {% endif %}
     </div>
 
     <div class="pdp-info">
@@ -104,4 +110,103 @@
   </section>
   {% endif %}
 </div>
+
+<!-- Virtual Try-On Modal -->
+{% if p.category and p.category.kind == 'eyewear' %}
+<script defer src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
+
+<div class="tryon-modal-overlay" id="tryOnModal" onclick="if(event.target===this)closeTryOn()">
+  <div class="tryon-modal">
+    <button class="tryon-close" onclick="closeTryOn()"><i class="fas fa-times"></i></button>
+
+    <!-- Left: Preview -->
+    <div class="tryon-preview-side">
+      <div class="tryon-canvas-container" id="tryOnCanvas">
+        <img id="tryOnFaceBg" class="tryon-face-bg" crossorigin="anonymous" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=600&h=600" alt="Model Face">
+        {% if p.tryon_image %}
+          {% if p.tryon_image.startswith('http') %}
+            <img id="tryOnFrame" class="tryon-frame-overlay" src="{{ p.tryon_image }}" alt="Frame">
+          {% else %}
+            <img id="tryOnFrame" class="tryon-frame-overlay" src="{{ url_for('static', filename='uploads/' ~ p.tryon_image) }}" alt="Frame">
+          {% endif %}
+        {% endif %}
+        <!-- Loading overlay -->
+        <div id="tryOnLoading" class="tryon-loading-overlay" style="display:none">
+          <div class="tryon-spinner"></div>
+          <span>Detecting face…</span>
+        </div>
+        <!-- Auto-fit badge -->
+        <div id="autoFitBadge" class="tryon-badge" style="display:none"></div>
+      </div>
+    </div>
+
+    <!-- Right: Controls -->
+    <div class="tryon-control-side">
+      <div>
+        <h3>Virtual Try-On</h3>
+        <p>AI auto-detects your face & fits the frame</p>
+      </div>
+
+      <!-- Saved Photo Section (hidden by default) -->
+      <div id="savedPhotoSection" style="display:none">
+        <div class="tryon-section-title"><i class="fas fa-user-check"></i> Your Saved Photo</div>
+        <div style="display:flex;align-items:center;gap:12px">
+          <div class="model-thumb active" id="savedPhotoThumb" onclick="loadSavedSelfie(getSavedSelfie())">
+            <img id="savedPhotoImg" src="" alt="Your Photo">
+          </div>
+          <button class="btn-upload" onclick="changePhoto()" style="border-color:var(--teal)"><i class="fas fa-sync-alt"></i> Change Photo</button>
+        </div>
+      </div>
+
+      <!-- Model Faces -->
+      <div>
+        <div class="tryon-section-title">Choose a Model Face</div>
+        <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+          <div class="model-thumbnails">
+            <div class="model-thumb" data-img="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=600&h=600" onclick="switchModel(this)">
+              <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=100&h=100" alt="Male">
+            </div>
+            <div class="model-thumb" data-img="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=600&h=600" onclick="switchModel(this)">
+              <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=100&h=100" alt="Female">
+            </div>
+            <div class="model-thumb" data-img="https://images.unsplash.com/photo-1503919545889-aef636e10ad4?auto=format&fit=crop&q=80&w=600&h=600" onclick="switchModel(this)">
+              <img src="https://images.unsplash.com/photo-1503919545889-aef636e10ad4?auto=format&fit=crop&q=80&w=100&h=100" alt="Child">
+            </div>
+          </div>
+          <div class="upload-btn-wrapper">
+            <button class="btn-upload"><i class="fas fa-camera"></i> Upload Selfie</button>
+            <input type="file" id="selfieUpload" accept="image/*" onchange="handleSelfieUpload(event)">
+          </div>
+        </div>
+      </div>
+
+      <!-- Fine-tune sliders -->
+      <div class="slider-container">
+        <div class="tryon-section-title">Fine-Tune Fit</div>
+        <div class="slider-group"><div class="slider-label-row"><span>Frame Size</span><span id="scaleVal">100%</span></div>
+          <input type="range" id="scaleSlider" class="tryon-slider" min="30" max="150" value="100" oninput="updateFrameTransform()"></div>
+        <div class="slider-group"><div class="slider-label-row"><span>Vertical</span><span id="yVal">0px</span></div>
+          <input type="range" id="ySlider" class="tryon-slider" min="-150" max="150" value="0" oninput="updateFrameTransform()"></div>
+        <div class="slider-group"><div class="slider-label-row"><span>Horizontal</span><span id="xVal">0px</span></div>
+          <input type="range" id="xSlider" class="tryon-slider" min="-150" max="150" value="0" oninput="updateFrameTransform()"></div>
+        <div class="slider-group"><div class="slider-label-row"><span>Rotation</span><span id="rotateVal">0°</span></div>
+          <input type="range" id="rotateSlider" class="tryon-slider" min="-30" max="30" value="0" oninput="updateFrameTransform()"></div>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:8px">
+        <input type="checkbox" id="blendModeCheck" checked onchange="toggleBlendMode(this)" style="accent-color:var(--teal);cursor:pointer">
+        <label for="blendModeCheck" style="font-size:13px;font-weight:600;color:var(--ink-soft);cursor:pointer;user-select:none">Auto Remove Frame Background</label>
+      </div>
+
+      <div class="tryon-actions">
+        <button class="btn-ghost" onclick="resetControls()">Reset Fit</button>
+        <button class="btn-primary" onclick="closeTryOn()">Looks Good!</button>
+      </div>
+      <p style="font-size:11px;text-align:center;color:var(--muted);margin-top:4px">Drag the glasses with your mouse or finger to fine-tune</p>
+    </div>
+  </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/tryon.js') }}"></script>
+{% endif %}
 {% endblock %}

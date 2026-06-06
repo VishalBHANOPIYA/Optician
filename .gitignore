@@ -8,3 +8,4 @@ app/static/uploads/
 .DS_Store
 *.sqlite
 test_eyewear.png
+pg_data/
