@@ -14,9 +14,9 @@
       <div class="pdp-main-img">
         {% if p.images %}
           {% if p.images[0].filename.startswith('http') %}
-            <img id="pdpMain" src="{{ p.images[0].filename }}" alt="{{ p.name }}">
+            <img id="pdpMain" src="{{ p.images[0].filename }}" alt="{{ p.name }}" style="object-fit: contain; width: 100%; height: 100%;">
           {% else %}
-            <img id="pdpMain" src="{{ url_for('static', filename='uploads/' ~ p.images[0].filename) }}" alt="{{ p.name }}">
+            <img id="pdpMain" src="{{ url_for('static', filename='uploads/' ~ p.images[0].filename) }}" alt="{{ p.name }}" style="object-fit: contain; width: 100%; height: 100%;">
           {%   endif %}
         {% else %}
           <div class="product-placeholder">{{ icon('wallet' if p.category and p.category.kind=='accessory' else 'glasses') }}</div>
